@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle != null ? pageTitle + ' — FellasBar Admin' : 'FellasBar Admin'}">FellasBar Admin</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+    <nav class="top-nav">
+        <a th:href="@{/admin}" class="nav-brand">FellasBar Admin</a>
+        <div class="nav-links">
+            <a th:href="@{/admin}">Dashboard</a>
+            <a th:href="@{/admin/venues/new}">+ New Venue</a>
+            <form th:action="@{/logout}" method="post" class="logout-form">
+                <button type="submit" class="btn-link">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <main class="container">
+        <div th:replace="~{::content}">Content goes here</div>
+    </main>
+</body>
+</html>

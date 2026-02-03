@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: html}">
+<body>
+<div th:fragment="content">
+    <div class="page-header">
+        <h1 th:text="${venue.id != null ? 'Edit Venue' : 'New Venue'}">Venue Form</h1>
+    </div>
+
+    <form th:action="${venue.id != null ? '/admin/venues/' + venue.id : '/admin/venues'}" method="post" class="card">
+        <h2>Basic Info</h2>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" th:value="${venue.name}" required>
+            </div>
+            <div class="form-group">
+                <label for="type">Type</label>
+                <select id="type" name="type">
+                    <option value="">— Select —</option>
+                    <option th:each="t : ${ {'Bar','Brewery','Restaurant','Pub','Winery','Sports Bar'} }"
+                            th:value="${t}" th:text="${t}" th:selected="${venue.type == t}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" th:value="${venue.address}">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="latitude">Latitude</label>
+                <input type="number" step="any" id="latitude" name="latitude" th:value="${venue.latitude}">
+            </div>
+            <div class="form-group">
+                <label for="longitude">Longitude</label>
+                <input type="number" step="any" id="longitude" name="longitude" th:value="${venue.longitude}">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" th:value="${venue.phone}">
+            </div>
+            <div class="form-group">
+                <label for="website">Website</label>
+                <input type="text" id="website" name="website" th:value="${venue.website}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="3" th:text="${venue.description}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="imageUrl">Image URL</label>
+            <input type="text" id="imageUrl" name="imageUrl" th:value="${venue.imageUrl}">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="rating">Rating</label>
+                <input type="number" step="0.1" min="0" max="5" id="rating" name="rating" th:value="${venue.rating}">
+            </div>
+            <div class="form-group">
+                <label for="reviewCount">Review Count</label>
+                <input type="number" id="reviewCount" name="reviewCount" th:value="${venue.reviewCount}">
+            </div>
+            <div class="form-group">
+                <label for="isOpen">Currently Open?</label>
+                <select id="isOpen" name="isOpen">
+                    <option value="">Unknown</option>
+                    <option value="true" th:selected="${venue.isOpen != null and venue.isOpen}">Yes</option>
+                    <option value="false" th:selected="${venue.isOpen != null and !venue.isOpen}">No</option>
+                </select>
+            </div>
+        </div>
+
+        <h2>Operating Hours</h2>
+        <div class="hours-grid">
+            <div class="form-row" th:each="day : ${daysOfWeek}">
+                <div class="form-group hours-label">
+                    <label th:text="${day}" th:for="'hours_' + ${day}"></label>
+                </div>
+                <div class="form-group hours-input">
+                    <input type="text" th:name="'hours_' + ${day}" th:id="'hours_' + ${day}"
+                           th:value="${hoursMap.containsKey(day) ? hoursMap.get(day) : ''}"
+                           placeholder="e.g. 11am - 11pm or Closed">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" th:text="${venue.id != null ? 'Update Venue' : 'Create Venue'}">Save</button>
+            <a th:href="@{/admin}" class="btn">Cancel</a>
+        </div>
+    </form>
+
+    <!-- Specials section (only for existing venues) -->
+    <div th:if="${venue.id != null}" class="card" style="margin-top: 1.5rem;">
+        <div class="page-header">
+            <h2>Specials</h2>
+            <a th:href="@{/admin/venues/{id}/specials/new(id=${venue.id})}" class="btn btn-sm btn-primary">+ Add Special</a>
+        </div>
+
+        <div th:if="${#lists.isEmpty(venue.specials)}" class="empty-state">
+            <p>No specials for this venue yet.</p>
+        </div>
+
+        <table th:unless="${#lists.isEmpty(venue.specials)}" class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Day</th>
+                    <th>Original Price</th>
+                    <th>Special Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="special : ${venue.specials}">
+                    <td th:text="${special.name}"></td>
+                    <td th:text="${special.dayOfWeek}"></td>
+                    <td th:text="${special.originalPrice != null ? '$' + special.originalPrice : '—'}"></td>
+                    <td th:text="${special.specialPrice != null ? '$' + special.specialPrice : '—'}"></td>
+                    <td class="actions">
+                        <a th:href="@{/admin/specials/{id}/edit(id=${special.id})}" class="btn btn-sm">Edit</a>
+                        <form th:action="@{/admin/specials/{id}/delete(id=${special.id})}" method="post" class="inline-form"
+                              onsubmit="return confirm('Delete this special?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
