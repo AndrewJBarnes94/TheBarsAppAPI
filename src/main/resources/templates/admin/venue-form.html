@@ -7,6 +7,7 @@
     </div>
 
     <form th:action="${venue.id != null ? '/admin/venues/' + venue.id : '/admin/venues'}" method="post" class="card">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <h2>Basic Info</h2>
         <div class="form-row">
             <div class="form-group">

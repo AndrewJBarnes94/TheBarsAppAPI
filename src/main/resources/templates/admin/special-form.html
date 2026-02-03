@@ -9,6 +9,7 @@
 
     <form th:action="${special.id != null ? '/admin/specials/' + special.id : '/admin/venues/' + venue.id + '/specials'}"
           method="post" class="card">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
         <div class="form-group">
             <label for="name">Name *</label>
