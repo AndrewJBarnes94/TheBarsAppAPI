@@ -23,6 +23,24 @@ public class SecurityConfig {
     @Value("${fellasbar.admin.password}")
     private String adminPassword;
 
+    @Value("${fellasbar.users.aj.password}")
+    private String ajPassword;
+
+    @Value("${fellasbar.users.bill.password}")
+    private String billPassword;
+
+    @Value("${fellasbar.users.dom.password}")
+    private String domPassword;
+
+    @Value("${fellasbar.users.seth.password}")
+    private String sethPassword;
+
+    @Value("${fellasbar.users.trevor.password}")
+    private String trevorPassword;
+
+    @Value("${fellasbar.users.jared.password}")
+    private String jaredPassword;
+
     @Bean
     @Order(1)
     public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
@@ -57,12 +75,42 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        var user = User.builder()
+        var admin = User.builder()
             .username(adminUsername)
             .password(passwordEncoder().encode(adminPassword))
             .roles("ADMIN")
             .build();
-        return new InMemoryUserDetailsManager(user);
+        var aj = User.builder()
+            .username("aj")
+            .password(passwordEncoder().encode(ajPassword))
+            .roles("ADMIN")
+            .build();
+        var bill = User.builder()
+            .username("bill")
+            .password(passwordEncoder().encode(billPassword))
+            .roles("ADMIN")
+            .build();
+        var dom = User.builder()
+            .username("dom")
+            .password(passwordEncoder().encode(domPassword))
+            .roles("ADMIN")
+            .build();
+        var seth = User.builder()
+            .username("seth")
+            .password(passwordEncoder().encode(sethPassword))
+            .roles("ADMIN")
+            .build();
+        var trevor = User.builder()
+            .username("trevor")
+            .password(passwordEncoder().encode(trevorPassword))
+            .roles("ADMIN")
+            .build();
+        var jared = User.builder()
+            .username("jared")
+            .password(passwordEncoder().encode(jaredPassword))
+            .roles("ADMIN")
+            .build();
+        return new InMemoryUserDetailsManager(admin, aj, bill, dom, seth, trevor, jared);
     }
 
     @Bean
