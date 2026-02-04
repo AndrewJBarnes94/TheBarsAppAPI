@@ -11,8 +11,11 @@
         <a th:href="@{/admin}" class="nav-brand">FellasBar Admin</a>
         <div class="nav-links">
             <a th:href="@{/admin}">Dashboard</a>
+            <a th:href="@{/admin/targets}">Target List</a>
             <a th:href="@{/admin/venues/new}">+ New Venue</a>
+            <a th:href="@{/admin/history}">History</a>
             <form th:action="@{/logout}" method="post" class="logout-form">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <button type="submit" class="btn-link">Logout</button>
             </form>
         </div>

@@ -2,13 +2,16 @@ package com.fellasbar.api.controller;
 
 import com.fellasbar.api.model.OperatingHours;
 import com.fellasbar.api.model.Special;
+import com.fellasbar.api.model.TargetVenue;
 import com.fellasbar.api.model.Venue;
+import com.fellasbar.api.service.AuditService;
 import com.fellasbar.api.service.VenueService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,9 +28,11 @@ public class AdminController {
     );
 
     private final VenueService venueService;
+    private final AuditService auditService;
 
-    public AdminController(VenueService venueService) {
+    public AdminController(VenueService venueService, AuditService auditService) {
         this.venueService = venueService;
+        this.auditService = auditService;
     }
 
     // --- Dashboard ---
@@ -50,9 +55,11 @@ public class AdminController {
 
     @PostMapping("/venues")
     public String createVenue(@ModelAttribute Venue venue,
-                              @RequestParam Map<String, String> params) {
-        Venue saved = venueService.saveVenue(venue);
-        saveOperatingHoursFromParams(saved, params);
+                              @RequestParam Map<String, String> params,
+                              Principal principal) {
+        String username = principal.getName();
+        Venue saved = venueService.saveVenue(venue, username);
+        saveOperatingHoursFromParams(saved, params, username);
         return "redirect:/admin";
     }
 
@@ -75,7 +82,9 @@ public class AdminController {
     @PostMapping("/venues/{id}")
     public String updateVenue(@PathVariable Long id,
                               @ModelAttribute Venue formVenue,
-                              @RequestParam Map<String, String> params) {
+                              @RequestParam Map<String, String> params,
+                              Principal principal) {
+        String username = principal.getName();
         Venue existing = venueService.findVenueById(id)
             .orElseThrow(() -> new IllegalArgumentException("Venue not found: " + id));
 
@@ -92,14 +101,14 @@ public class AdminController {
         existing.setReviewCount(formVenue.getReviewCount());
         existing.setIsOpen(formVenue.getIsOpen());
 
-        venueService.saveVenue(existing);
-        saveOperatingHoursFromParams(existing, params);
+        venueService.saveVenue(existing, username);
+        saveOperatingHoursFromParams(existing, params, username);
         return "redirect:/admin/venues/" + id + "/edit";
     }
 
     @PostMapping("/venues/{id}/delete")
-    public String deleteVenue(@PathVariable Long id) {
-        venueService.deleteVenue(id);
+    public String deleteVenue(@PathVariable Long id, Principal principal) {
+        venueService.deleteVenue(id, principal.getName());
         return "redirect:/admin";
     }
 
@@ -124,7 +133,8 @@ public class AdminController {
                                 @RequestParam(required = false) String description,
                                 @RequestParam(required = false) BigDecimal originalPrice,
                                 @RequestParam(required = false) BigDecimal specialPrice,
-                                @RequestParam(required = false) String dayOfWeek) {
+                                @RequestParam(required = false) String dayOfWeek,
+                                Principal principal) {
         Venue venue = venueService.findVenueById(venueId)
             .orElseThrow(() -> new IllegalArgumentException("Venue not found: " + venueId));
 
@@ -136,7 +146,7 @@ public class AdminController {
         special.setSpecialPrice(specialPrice);
         special.setDayOfWeek(dayOfWeek);
 
-        venueService.saveSpecial(special);
+        venueService.saveSpecial(special, principal.getName());
         return "redirect:/admin/venues/" + venueId + "/edit";
     }
 
@@ -157,7 +167,8 @@ public class AdminController {
                                 @RequestParam(required = false) String description,
                                 @RequestParam(required = false) BigDecimal originalPrice,
                                 @RequestParam(required = false) BigDecimal specialPrice,
-                                @RequestParam(required = false) String dayOfWeek) {
+                                @RequestParam(required = false) String dayOfWeek,
+                                Principal principal) {
         Special special = venueService.findSpecialById(id)
             .orElseThrow(() -> new IllegalArgumentException("Special not found: " + id));
 
@@ -167,16 +178,16 @@ public class AdminController {
         special.setSpecialPrice(specialPrice);
         special.setDayOfWeek(dayOfWeek);
 
-        venueService.saveSpecial(special);
+        venueService.saveSpecial(special, principal.getName());
         return "redirect:/admin/venues/" + special.getVenue().getId() + "/edit";
     }
 
     @PostMapping("/specials/{id}/delete")
-    public String deleteSpecial(@PathVariable Long id) {
+    public String deleteSpecial(@PathVariable Long id, Principal principal) {
         Special special = venueService.findSpecialById(id)
             .orElseThrow(() -> new IllegalArgumentException("Special not found: " + id));
         Long venueId = special.getVenue().getId();
-        venueService.deleteSpecial(id);
+        venueService.deleteSpecial(id, principal.getName());
         return "redirect:/admin/venues/" + venueId + "/edit";
     }
 
@@ -195,9 +206,43 @@ public class AdminController {
         }
     }
 
+    // --- Target Venues (crowdsourcing list) ---
+
+    @GetMapping("/targets")
+    public String targetVenuesList(Model model) {
+        model.addAttribute("targetVenues", venueService.getAllTargetVenues());
+        return "admin/target-venues";
+    }
+
+    @GetMapping("/targets/{id}/add")
+    public String addFromTarget(@PathVariable Long id, Model model) {
+        TargetVenue target = venueService.findTargetVenueById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Target venue not found: " + id));
+
+        Venue venue = new Venue();
+        venue.setName(target.getName());
+        venue.setType(target.getType());
+        venue.setAddress(target.getAddress());
+        venue.setWebsite(target.getWebsite());
+
+        model.addAttribute("venue", venue);
+        model.addAttribute("daysOfWeek", DAYS_OF_WEEK);
+        model.addAttribute("hoursMap", Map.of());
+        model.addAttribute("fromTarget", target.getId());
+        return "admin/venue-form";
+    }
+
+    // --- Audit Log ---
+
+    @GetMapping("/history")
+    public String auditLog(Model model) {
+        model.addAttribute("logs", auditService.getAllLogs());
+        return "admin/history";
+    }
+
     // --- Helpers ---
 
-    private void saveOperatingHoursFromParams(Venue venue, Map<String, String> params) {
+    private void saveOperatingHoursFromParams(Venue venue, Map<String, String> params, String username) {
         List<OperatingHours> hoursList = new ArrayList<>();
         for (String day : DAYS_OF_WEEK) {
             String value = params.get("hours_" + day);
@@ -208,6 +253,10 @@ public class AdminController {
                 hoursList.add(oh);
             }
         }
-        venueService.saveOperatingHours(venue, hoursList);
+        if (!hoursList.isEmpty()) {
+            venueService.saveOperatingHours(venue, hoursList);
+            auditService.log(username, "UPDATE", "OPERATING_HOURS", venue.getId(),
+                "Updated operating hours for: " + venue.getName());
+        }
     }
 }
