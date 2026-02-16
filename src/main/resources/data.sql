@@ -349,3 +349,5 @@ INSERT INTO target_venues (name, type, address, website, is_added) VALUES ('Bana
 INSERT INTO target_venues (name, type, address, website, is_added) VALUES ('Taco Bus Largo', 'Restaurant', 'Largo, FL', 'https://tacobus.com', false);
 INSERT INTO target_venues (name, type, address, website, is_added) VALUES ('The Thai Place', 'Restaurant', 'Largo, FL', NULL, false);
 INSERT INTO target_venues (name, type, address, website, is_added) VALUES ('Acropolis Greek Taverna', 'Restaurant', 'Largo, FL', 'https://acropolistaverna.com', false);
+
+
