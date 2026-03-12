@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle != null ? pageTitle + ' — Fellas' : 'Fellas'}">Fellas</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body>
+
+<nav class="site-nav">
+    <a th:href="@{/}" class="site-brand">Fellas</a>
+    <button class="nav-toggle" onclick="this.closest('nav').querySelector('.site-nav-links').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+    <div class="site-nav-links">
+        <a th:href="@{/vlogs}">Vlogs</a>
+        <a th:href="@{/blog}">Blog</a>
+        <a th:href="@{/store}">Store</a>
+        <a th:href="@{/thebarsapp}" class="nav-app-pill">The Bars App ↗</a>
+    </div>
+</nav>
+
+<div th:replace="~{::content}">Content goes here</div>
+
+<footer class="site-footer">
+    <span>© 2026 Fellas · Tampa Bay, FL</span>
+    <div class="footer-links">
+        <a th:href="@{/vlogs}">Vlogs</a>
+        <a th:href="@{/blog}">Blog</a>
+        <a th:href="@{/store}">Store</a>
+        <a th:href="@{/thebarsapp}">The Bars App</a>
+    </div>
+</footer>
+
+</body>
+</html>

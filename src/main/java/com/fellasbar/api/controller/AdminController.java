@@ -199,21 +199,6 @@ public class AdminController {
         return "redirect:/admin/venues/" + venueId + "/edit";
     }
 
-    // --- Login page ---
-
-    @Controller
-    static class LoginController {
-        @GetMapping("/")
-        public String home() {
-            return "home";
-        }
-
-        @GetMapping("/login")
-        public String login() {
-            return "admin/login";
-        }
-    }
-
     // --- Target Venues (crowdsourcing list) ---
 
     @GetMapping("/targets")

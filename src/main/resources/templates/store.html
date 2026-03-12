@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<body>
+<div th:fragment="content">
+
+    <section class="page-hero">
+        <p class="eyebrow">Fellas · Merch</p>
+        <h1>The Store</h1>
+        <p>Rep the brand. Look good doing it.</p>
+    </section>
+
+    <!-- TODO: Wire up Stripe/payment processing for cart & checkout -->
+    <section class="content-section">
+        <div class="store-notice">
+            <span>🚧</span> Store coming soon — checkout will be available shortly.
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-thumb"></div>
+                <div class="product-info">
+                    <h3>Fellas Heavyweight Tee</h3>
+                    <p class="product-desc">100% cotton, oversized fit. Black.</p>
+                    <div class="product-bottom">
+                        <span class="product-price">$35</span>
+                        <button class="btn-cart" disabled>Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-thumb"></div>
+                <div class="product-info">
+                    <h3>Tampa Bay Nights Hoodie</h3>
+                    <p class="product-desc">Heavyweight fleece. Washed black.</p>
+                    <div class="product-bottom">
+                        <span class="product-price">$65</span>
+                        <button class="btn-cart" disabled>Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-thumb"></div>
+                <div class="product-info">
+                    <h3>Fellas Snapback</h3>
+                    <p class="product-desc">6-panel structured cap. One size.</p>
+                    <div class="product-bottom">
+                        <span class="product-price">$30</span>
+                        <button class="btn-cart" disabled>Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-thumb"></div>
+                <div class="product-info">
+                    <h3>Fellas Bucket Hat</h3>
+                    <p class="product-desc">Unstructured cotton twill. Natural.</p>
+                    <div class="product-bottom">
+                        <span class="product-price">$28</span>
+                        <button class="btn-cart" disabled>Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-thumb"></div>
+                <div class="product-info">
+                    <h3>Last Round Tee</h3>
+                    <p class="product-desc">Vintage wash, relaxed fit. White.</p>
+                    <div class="product-bottom">
+                        <span class="product-price">$35</span>
+                        <button class="btn-cart" disabled>Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-thumb"></div>
+                <div class="product-info">
+                    <h3>Fellas Shorts</h3>
+                    <p class="product-desc">7" inseam, nylon. Black.</p>
+                    <div class="product-bottom">
+                        <span class="product-price">$45</span>
+                        <button class="btn-cart" disabled>Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

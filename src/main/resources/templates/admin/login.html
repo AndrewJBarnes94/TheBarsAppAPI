@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login — FellasBar Admin</title>
+    <title>Login — Fellas HQ</title>
     <link rel="stylesheet" th:href="@{/css/admin.css}">
 </head>
 <body>
     <div class="login-container">
-        <a th:href="@{/}" class="login-back">← Back to site</a>
-        <h1>FellasBar Admin</h1>
+        <a th:href="@{/}" class="login-back">← fellas</a>
+        <h1>Fellas HQ</h1>
         <div th:if="${param.error}" class="alert alert-error">Invalid username or password.</div>
         <div th:if="${param.logout}" class="alert alert-info">You have been logged out.</div>
         <form th:action="@{/login}" method="post" class="login-form">

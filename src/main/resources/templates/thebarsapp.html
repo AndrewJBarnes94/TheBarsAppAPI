@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<body>
+<div th:fragment="content">
+
+    <section class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">A Fellas Product · Tampa Bay</p>
+            <h1>Find the deal.<br>Make the call.</h1>
+            <p>Bars, breweries, and restaurants near you — with live specials, happy hour times, and everything you need to decide where to go tonight.</p>
+            <a href="#features" class="btn-primary">See What's Inside</a>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <h2>Everything for a night out</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📍</div>
+                <h3>Nearby Venues</h3>
+                <p>Find bars, breweries, and restaurants around you, sorted by distance or by who's running the best specials right now.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🍺</div>
+                <h3>Live Specials</h3>
+                <p>Happy hours, drink deals, food specials — filtered to today and the current time so you always know what's actually on.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>Reminders</h3>
+                <p>Set a notification before your favorite happy hour ends. Never show up five minutes late again.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">❤️</div>
+                <h3>Favorites</h3>
+                <p>Save your go-to spots. Pull up their hours, specials, and location without thinking about it.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-content">
+            <h2>We built it for ourselves.<br>You're welcome.</h2>
+            <p>The Bars App is a Tampa Bay bar guide built by Fellas — a group of locals who got tired of asking "so where are we going?" Open the app, see what's around you, see what's on — done.</p>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>
