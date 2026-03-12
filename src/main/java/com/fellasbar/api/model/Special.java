@@ -1,6 +1,7 @@
 package com.fellasbar.api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
 @Entity
@@ -15,6 +16,7 @@ public class Special {
     @JoinColumn(name = "venue_id", nullable = false)
     private Venue venue;
 
+    @NotBlank
     private String name;
 
     @Column(length = 500)
@@ -28,6 +30,12 @@ public class Special {
 
     @Column(name = "day_of_week", length = 20)
     private String dayOfWeek;
+
+    @Column(name = "start_time", length = 20)
+    private String startTime;
+
+    @Column(name = "end_time", length = 20)
+    private String endTime;
 
     public Special() {}
 
@@ -51,4 +59,10 @@ public class Special {
 
     public String getDayOfWeek() { return dayOfWeek; }
     public void setDayOfWeek(String dayOfWeek) { this.dayOfWeek = dayOfWeek; }
+
+    public String getStartTime() { return startTime; }
+    public void setStartTime(String startTime) { this.startTime = startTime; }
+
+    public String getEndTime() { return endTime; }
+    public void setEndTime(String endTime) { this.endTime = endTime; }
 }

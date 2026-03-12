@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fellas — Tampa Bay Bar &amp; Specials Guide</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body>
+
+<nav class="site-nav">
+    <a th:href="@{/}" class="site-brand">Fellas</a>
+    <div class="site-nav-links">
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a th:href="@{/admin}" class="btn-nav-admin">Admin</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Tampa Bay's Bar &amp; Happy Hour Guide</h1>
+        <p>Discover bars, breweries, and restaurants near you. See what specials are happening right now and never miss a deal.</p>
+        <a href="#features" class="btn-hero">See What's Inside</a>
+    </div>
+</section>
+
+<section id="features" class="features">
+    <h2>Everything You Need for a Night Out</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📍</div>
+            <h3>Nearby Venues</h3>
+            <p>Find bars, breweries, and restaurants within your radius, sorted by distance or number of active specials.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🍺</div>
+            <h3>Live Specials</h3>
+            <p>See what's happening right now. Happy hours, drink deals, and food specials — filtered to the current day and time.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔔</div>
+            <h3>Reminders</h3>
+            <p>Set notifications for your favorite happy hours so you always know when it's time to head out.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">❤️</div>
+            <h3>Favorites</h3>
+            <p>Save your go-to spots for quick access to their hours, specials, and location.</p>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="about">
+    <div class="about-content">
+        <h2>Built for the Fellas</h2>
+        <p>Fellas is a Tampa Bay bar discovery app built by locals, for locals. Whether you're planning a night out or just looking for the best deal nearby, Fellas has you covered.</p>
+    </div>
+</section>
+
+<footer class="site-footer">
+    <span>© 2026 Fellas · Tampa Bay, FL</span>
+    <a th:href="@{/admin}">Admin</a>
+</footer>
+
+</body>
+</html>

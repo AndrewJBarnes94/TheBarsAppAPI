@@ -215,3 +215,13 @@ body {
 /* Subtitle in page header */
 .page-header { flex-direction: column; align-items: flex-start; }
 .page-header .subtitle { margin-top: 0.25rem; }
+
+/* Login page back link */
+.login-back {
+    display: block;
+    margin-bottom: 1.25rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+    text-decoration: none;
+}
+.login-back:hover { color: #111; }

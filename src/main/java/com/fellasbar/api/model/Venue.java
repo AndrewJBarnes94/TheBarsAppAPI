@@ -1,6 +1,8 @@
 package com.fellasbar.api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class Venue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @Column(nullable = false)
     private String name;
 
@@ -21,8 +24,10 @@ public class Venue {
     @Column(length = 500)
     private String address;
 
+    @NotNull
     private Double latitude;
 
+    @NotNull
     private Double longitude;
 
     @Column(length = 50)

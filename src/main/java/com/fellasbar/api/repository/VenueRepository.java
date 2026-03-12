@@ -14,12 +14,12 @@ public interface VenueRepository extends JpaRepository<Venue, Long> {
 
     @Query("""
         SELECT v FROM Venue v
-        WHERE (6371 * acos(
+        WHERE (3958.8 * acos(
             cos(radians(:lat)) * cos(radians(v.latitude))
             * cos(radians(v.longitude) - radians(:lng))
             + sin(radians(:lat)) * sin(radians(v.latitude))
         )) <= :radiusMiles
-        ORDER BY (6371 * acos(
+        ORDER BY (3958.8 * acos(
             cos(radians(:lat)) * cos(radians(v.latitude))
             * cos(radians(v.longitude) - radians(:lng))
             + sin(radians(:lat)) * sin(radians(v.latitude))

@@ -134,6 +134,8 @@ public class AdminController {
                                 @RequestParam(required = false) BigDecimal originalPrice,
                                 @RequestParam(required = false) BigDecimal specialPrice,
                                 @RequestParam(required = false) String dayOfWeek,
+                                @RequestParam(required = false) String startTime,
+                                @RequestParam(required = false) String endTime,
                                 Principal principal) {
         Venue venue = venueService.findVenueById(venueId)
             .orElseThrow(() -> new IllegalArgumentException("Venue not found: " + venueId));
@@ -145,6 +147,8 @@ public class AdminController {
         special.setOriginalPrice(originalPrice);
         special.setSpecialPrice(specialPrice);
         special.setDayOfWeek(dayOfWeek);
+        special.setStartTime(startTime != null && !startTime.isBlank() ? startTime.trim() : null);
+        special.setEndTime(endTime != null && !endTime.isBlank() ? endTime.trim() : null);
 
         venueService.saveSpecial(special, principal.getName());
         return "redirect:/admin/venues/" + venueId + "/edit";
@@ -168,6 +172,8 @@ public class AdminController {
                                 @RequestParam(required = false) BigDecimal originalPrice,
                                 @RequestParam(required = false) BigDecimal specialPrice,
                                 @RequestParam(required = false) String dayOfWeek,
+                                @RequestParam(required = false) String startTime,
+                                @RequestParam(required = false) String endTime,
                                 Principal principal) {
         Special special = venueService.findSpecialById(id)
             .orElseThrow(() -> new IllegalArgumentException("Special not found: " + id));
@@ -177,6 +183,8 @@ public class AdminController {
         special.setOriginalPrice(originalPrice);
         special.setSpecialPrice(specialPrice);
         special.setDayOfWeek(dayOfWeek);
+        special.setStartTime(startTime != null && !startTime.isBlank() ? startTime.trim() : null);
+        special.setEndTime(endTime != null && !endTime.isBlank() ? endTime.trim() : null);
 
         venueService.saveSpecial(special, principal.getName());
         return "redirect:/admin/venues/" + special.getVenue().getId() + "/edit";
@@ -197,7 +205,7 @@ public class AdminController {
     static class LoginController {
         @GetMapping("/")
         public String home() {
-            return "redirect:/admin";
+            return "home";
         }
 
         @GetMapping("/login")

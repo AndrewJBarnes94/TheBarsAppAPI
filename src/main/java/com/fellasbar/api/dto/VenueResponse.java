@@ -34,7 +34,9 @@ public record VenueResponse(
         String description,
         BigDecimal originalPrice,
         BigDecimal specialPrice,
-        String dayOfWeek
+        String dayOfWeek,
+        String startTime,
+        String endTime
     ) {
         public static SpecialResponse from(Special s) {
             return new SpecialResponse(
@@ -43,7 +45,9 @@ public record VenueResponse(
                 s.getDescription(),
                 s.getOriginalPrice(),
                 s.getSpecialPrice(),
-                s.getDayOfWeek()
+                s.getDayOfWeek(),
+                s.getStartTime(),
+                s.getEndTime()
             );
         }
     }
