@@ -3,41 +3,115 @@
 <body>
 <div th:fragment="content">
 
+    <!-- Hero -->
     <section class="hero">
         <div class="hero-content">
             <p class="eyebrow">A Fellas Product · Tampa Bay</p>
-            <h1>Find the deal.<br>Make the call.</h1>
-            <p>Bars, breweries, and restaurants near you — with live specials, happy hour times, and everything you need to decide where to go tonight.</p>
-            <a href="#features" class="btn-primary">See What's Inside</a>
+            <h1>Find the Best Bars<br>Around You. Instantly.</h1>
+            <p>Discover nearby bars, restaurants, and live specials — and see the vibe before you even walk in.</p>
+            <div class="hero-ctas">
+                <a href="#app-stores" class="btn-primary">Download the App</a>
+                <a href="#features" class="btn-ghost">Explore Bars Near Me</a>
+            </div>
         </div>
     </section>
 
+    <!-- How It Works -->
     <section id="features" class="features">
-        <h2>Everything for a night out</h2>
+        <h2>How It Works</h2>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">📍</div>
-                <h3>Nearby Venues</h3>
-                <p>Find bars, breweries, and restaurants around you, sorted by distance or by who's running the best specials right now.</p>
+                <h3>Location Based</h3>
+                <p>Find bars and restaurants near you, sorted by distance or by who's running the best specials right now.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🍺</div>
                 <h3>Live Specials</h3>
-                <p>Happy hours, drink deals, food specials — filtered to today and the current time so you always know what's actually on.</p>
+                <p>See happy hours and deals happening right now — filtered to today and the current time so you're never out of date.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🔔</div>
-                <h3>Reminders</h3>
-                <p>Set a notification before your favorite happy hour ends. Never show up five minutes late again.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">❤️</div>
-                <h3>Favorites</h3>
-                <p>Save your go-to spots. Pull up their hours, specials, and location without thinking about it.</p>
+                <div class="feature-icon">🔥</div>
+                <h3>Real Vibes</h3>
+                <p>See photos and reviews from people who've actually been there — know the spot before you go.</p>
             </div>
         </div>
     </section>
 
+    <!-- Featured Spots -->
+    <section class="content-section alt-bg">
+        <div class="section-header">
+            <h2>Featured Spots</h2>
+        </div>
+        <div class="card-grid">
+            <div class="spot-card">
+                <div class="spot-thumb"></div>
+                <div class="spot-info">
+                    <div class="spot-header">
+                        <h3>The Salty Crab</h3>
+                        <span class="spot-distance">0.3 mi</span>
+                    </div>
+                    <div class="spot-rating">★ 4.7 <span>(1,243)</span></div>
+                    <p class="spot-deal">$4 Drafts Tonight</p>
+                </div>
+            </div>
+            <div class="spot-card">
+                <div class="spot-thumb"></div>
+                <div class="spot-info">
+                    <div class="spot-header">
+                        <h3>Whiskey Lounge</h3>
+                        <span class="spot-distance">0.8 mi</span>
+                    </div>
+                    <div class="spot-rating">★ 4.8 <span>(887)</span></div>
+                    <p class="spot-deal">$9 Old Fashioneds · 4 Hours</p>
+                </div>
+            </div>
+            <div class="spot-card">
+                <div class="spot-thumb"></div>
+                <div class="spot-info">
+                    <div class="spot-header">
+                        <h3>Skyline Rooftop</h3>
+                        <span class="spot-distance">0.5 mi</span>
+                    </div>
+                    <div class="spot-rating">★ 4.9 <span>(2,104)</span></div>
+                    <p class="spot-deal">$7 Margaritas · 2-For-1 Beers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Own a Bar CTA -->
+    <section class="bar-owner-section">
+        <div class="bar-owner-inner">
+            <h2>Own a bar or restaurant?</h2>
+            <p>Get your venue listed and start promoting your specials to thousands of users in Tampa Bay.</p>
+            <div class="bar-owner-ctas">
+                <a href="mailto:hello@fellasbar.com" class="btn-primary">List Your Venue</a>
+                <a href="mailto:hello@fellasbar.com" class="btn-ghost">Promote Your Specials</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Store Links -->
+    <section id="app-stores" class="app-stores-section">
+        <div class="app-stores-inner">
+            <p class="eyebrow">Available Now</p>
+            <h2>Download The Bars App</h2>
+            <p>Free on iOS. Tampa Bay's bar guide — built by locals, for locals.</p>
+            <div class="app-badges">
+                <a href="#" class="app-badge app-badge-ios">
+                    <span class="badge-sub">Download on the</span>
+                    <span class="badge-main">App Store</span>
+                </a>
+                <a href="#" class="app-badge app-badge-android">
+                    <span class="badge-sub">Get it on</span>
+                    <span class="badge-main">Google Play</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
     <section class="about">
         <div class="about-content">
             <h2>We built it for ourselves.<br>You're welcome.</h2>

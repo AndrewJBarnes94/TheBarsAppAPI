@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice">
+  <defs>
+
+    <!-- Sky: deep twilight blue-purple → warm magenta → orange → golden horizon -->
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0c1840"/>
+      <stop offset="18%"  stop-color="#291450"/>
+      <stop offset="38%"  stop-color="#7a2448"/>
+      <stop offset="58%"  stop-color="#d04020"/>
+      <stop offset="76%"  stop-color="#ee8a22"/>
+      <stop offset="90%"  stop-color="#f5c038"/>
+      <stop offset="100%" stop-color="#f8d870"/>
+    </linearGradient>
+
+    <!-- Sun halo: wide radial glow centred near horizon -->
+    <radialGradient id="sunHalo" cx="52%" cy="61%" r="48%">
+      <stop offset="0%"   stop-color="#fffad0" stop-opacity="0.85"/>
+      <stop offset="18%"  stop-color="#f5bc38" stop-opacity="0.55"/>
+      <stop offset="45%"  stop-color="#ee7018" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#d04020" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Ocean depth -->
+    <linearGradient id="ocean" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1e6882"/>
+      <stop offset="45%"  stop-color="#155468"/>
+      <stop offset="100%" stop-color="#0c2e40"/>
+    </linearGradient>
+
+    <!-- Sun reflection column on water -->
+    <linearGradient id="sunRef" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#f8c840" stop-opacity="0.75"/>
+      <stop offset="55%"  stop-color="#f08028" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#f8c840" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Beach sand -->
+    <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#c89048"/>
+      <stop offset="55%"  stop-color="#b07830"/>
+      <stop offset="100%" stop-color="#946020"/>
+    </linearGradient>
+
+    <!-- Wet sand / foam edge -->
+    <linearGradient id="wetSand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#a0b8c8" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#a0b8c8" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Vignette overlay -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="72%">
+      <stop offset="0%"   stop-color="transparent"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.42)"/>
+    </radialGradient>
+
+    <!-- Left text-legibility overlay -->
+    <linearGradient id="textOverlay" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="rgba(8,10,22,0.30)"/>
+      <stop offset="48%"  stop-color="rgba(8,10,22,0.06)"/>
+      <stop offset="100%" stop-color="rgba(8,10,22,0)"/>
+    </linearGradient>
+
+  </defs>
+
+  <!-- ── SKY ──────────────────────────────────────────── -->
+  <rect width="1440" height="720" fill="url(#sky)"/>
+
+  <!-- Wide sun halo fills the sky toward the horizon -->
+  <rect width="1440" height="720" fill="url(#sunHalo)"/>
+
+  <!-- ── CLOUDS ────────────────────────────────────────── -->
+  <!-- Upper left cloud bank -->
+  <g opacity="0.62">
+    <ellipse cx="218"  cy="158" rx="148" ry="40"  fill="#a02858"/>
+    <ellipse cx="305"  cy="140" rx="108" ry="28"  fill="#b83468"/>
+    <ellipse cx="148"  cy="176" rx="82"  ry="22"  fill="#8e2248"/>
+    <ellipse cx="355"  cy="162" rx="72"  ry="18"  fill="#c84050"/>
+  </g>
+  <!-- Upper right cloud bank -->
+  <g opacity="0.60">
+    <ellipse cx="1058" cy="148" rx="138" ry="36"  fill="#a02858"/>
+    <ellipse cx="1165" cy="132" rx="98"  ry="26"  fill="#b83468"/>
+    <ellipse cx="1238" cy="162" rx="75"  ry="20"  fill="#902248"/>
+    <ellipse cx="1340" cy="188" rx="90"  ry="22"  fill="#c04048"/>
+  </g>
+  <!-- Centre-left thin band -->
+  <g opacity="0.40">
+    <ellipse cx="510"  cy="198" rx="112" ry="18"  fill="#d8584a"/>
+    <ellipse cx="458"  cy="185" rx="78"  ry="14"  fill="#cc4840"/>
+  </g>
+  <!-- Cloud edge highlights (warm gold) -->
+  <g opacity="0.30" fill="#f8c860">
+    <ellipse cx="270"  cy="148" rx="128" ry="10"/>
+    <ellipse cx="1110" cy="138" rx="115" ry="9"/>
+  </g>
+
+  <!-- ── SUN ──────────────────────────────────────────── -->
+  <circle cx="748" cy="436" r="130" fill="#f06018" opacity="0.09"/>
+  <circle cx="748" cy="436" r="95"  fill="#f09028" opacity="0.18"/>
+  <circle cx="748" cy="436" r="68"  fill="#f5c040" opacity="0.38"/>
+  <circle cx="748" cy="436" r="50"  fill="#fff8d0" opacity="0.97"/>
+
+  <!-- ── OCEAN ─────────────────────────────────────────── -->
+  <rect x="0" y="432" width="1440" height="238" fill="url(#ocean)"/>
+
+  <!-- Sun reflection column -->
+  <ellipse cx="748" cy="540" rx="58" ry="250" fill="url(#sunRef)"/>
+
+  <!-- Distant sparkle on water either side of reflection -->
+  <g opacity="0.18" fill="#f5c060">
+    <ellipse cx="560" cy="480" rx="30" ry="6"/>
+    <ellipse cx="940" cy="480" rx="28" ry="6"/>
+    <ellipse cx="450" cy="510" rx="18" ry="4"/>
+    <ellipse cx="1060" cy="510" rx="20" ry="4"/>
+  </g>
+
+  <!-- ── WAVE LAYERS ────────────────────────────────────── -->
+  <!-- Wave 1 – back, subtle -->
+  <path d="M0,448 Q180,436 360,450 Q540,464 720,450 Q900,436 1080,450
+           Q1260,464 1440,450 L1440,468 Q1260,470 1080,468
+           Q900,466 720,468 Q540,470 360,468 Q180,466 0,468Z"
+        fill="#22788e" opacity="0.65"/>
+
+  <!-- Wave 2 – mid -->
+  <path d="M0,472 Q200,460 400,474 Q600,488 800,474
+           Q1000,460 1200,474 Q1340,482 1440,474
+           L1440,496 Q1200,500 960,496 Q720,492 480,496
+           Q240,500 0,496Z"
+        fill="#1a6070" opacity="0.78"/>
+
+  <!-- Wave 3 – crest, lighter edge -->
+  <path d="M0,496 Q240,484 480,498 Q720,512 960,498
+           Q1200,484 1440,498 L1440,512 Q1200,506 960,512
+           Q720,518 480,512 Q240,506 0,512Z"
+        fill="#2e8ea4" opacity="0.55"/>
+
+  <!-- Foam ribbon at beach edge -->
+  <path d="M0,572 Q360,558 720,572 Q1080,586 1440,572
+           L1440,583 Q1080,598 720,583 Q360,568 0,583Z"
+        fill="#b8d8e8" opacity="0.48"/>
+
+  <!-- ── BEACH SAND ──────────────────────────────────────── -->
+  <path d="M0,576 Q360,562 720,576 Q1080,590 1440,576 L1440,720 L0,720Z"
+        fill="url(#sand)"/>
+
+  <!-- Wet sand gloss near water -->
+  <path d="M0,576 Q360,562 720,576 Q1080,590 1440,576
+           L1440,610 Q1080,625 720,610 Q360,595 0,610Z"
+        fill="url(#wetSand)"/>
+
+  <!-- Sand highlight band (dry section) -->
+  <path d="M0,625 Q360,615 720,628 Q1080,641 1440,628
+           L1440,645 Q1080,655 720,645 Q360,635 0,645Z"
+        fill="#e0b868" opacity="0.28"/>
+
+  <!-- ── LEFT PALM TREE ──────────────────────────────────── -->
+  <g>
+    <!-- Curved trunk -->
+    <path d="M175,720 C170,658 164,594 170,532
+             C175,476 182,440 176,396
+             C172,365 174,342 170,308"
+          stroke="#0c1808" stroke-width="16" fill="none" stroke-linecap="round"/>
+
+    <!-- Crown foliage – dark silhouette fronds -->
+    <!-- Sweeping left, low -->
+    <path d="M170,308 Q128,291 78,272 Q118,278 158,298 Z" fill="#0c1e08"/>
+    <!-- Left, upward -->
+    <path d="M170,308 Q144,278 122,240 Q140,268 165,300 Z" fill="#0e2210"/>
+    <!-- Almost straight up-left -->
+    <path d="M170,308 Q160,272 155,232 Q160,268 168,300 Z" fill="#0c1e08"/>
+    <!-- Straight up -->
+    <path d="M170,308 Q168,270 170,228 Q170,266 170,300 Z" fill="#0e2210"/>
+    <!-- Up-right -->
+    <path d="M170,308 Q182,272 192,232 Q182,268 172,300 Z" fill="#0c1e08"/>
+    <!-- Right, upward -->
+    <path d="M170,308 Q198,278 222,240 Q200,268 174,300 Z" fill="#0e2210"/>
+    <!-- Sweeping right, level -->
+    <path d="M170,308 Q212,292 258,278 Q216,285 174,302 Z" fill="#0c1e08"/>
+    <!-- Sweeping right, low -->
+    <path d="M170,308 Q220,300 268,302 Q220,295 174,304 Z" fill="#0e2210"/>
+    <!-- Hanging frond lower-left -->
+    <path d="M170,308 Q148,320 118,338 Q146,322 168,310 Z" fill="#0c1e08"/>
+
+    <!-- Coconuts -->
+    <circle cx="168" cy="315" r="6" fill="#0a1406"/>
+    <circle cx="176" cy="311" r="5" fill="#0a1406"/>
+    <circle cx="164" cy="310" r="4" fill="#0a1406"/>
+  </g>
+
+  <!-- ── RIGHT PALM TREE ─────────────────────────────────── -->
+  <g>
+    <!-- Slightly taller, leans right -->
+    <path d="M1292,720 C1298,652 1305,582 1298,512
+             C1291,448 1283,405 1288,358
+             C1292,326 1291,300 1288,264"
+          stroke="#0c1808" stroke-width="14" fill="none" stroke-linecap="round"/>
+
+    <!-- Fronds -->
+    <path d="M1288,264 Q1245,245 1198,232 Q1242,240 1284,258 Z" fill="#0c1e08"/>
+    <path d="M1288,264 Q1262,232 1244,196 Q1260,228 1284,256 Z" fill="#0e2210"/>
+    <path d="M1288,264 Q1280,228 1278,190 Q1280,226 1285,256 Z" fill="#0c1e08"/>
+    <path d="M1288,264 Q1288,226 1290,188 Q1289,225 1288,256 Z" fill="#0e2210"/>
+    <path d="M1288,264 Q1298,228 1305,190 Q1298,226 1290,256 Z" fill="#0c1e08"/>
+    <path d="M1288,264 Q1316,234 1338,198 Q1318,230 1292,257 Z" fill="#0e2210"/>
+    <path d="M1288,264 Q1328,246 1368,232 Q1328,240 1292,258 Z" fill="#0c1e08"/>
+    <path d="M1288,264 Q1332,258 1372,264 Q1330,256 1292,260 Z" fill="#0e2210"/>
+    <path d="M1288,264 Q1268,276 1240,295 Q1266,278 1286,266 Z" fill="#0c1e08"/>
+
+    <circle cx="1286" cy="271" r="6" fill="#0a1406"/>
+    <circle cx="1294" cy="267" r="5" fill="#0a1406"/>
+    <circle cx="1282" cy="266" r="4" fill="#0a1406"/>
+  </g>
+
+  <!-- ── SMALL BACKGROUND PALM (far right) ─────────────────── -->
+  <g opacity="0.55">
+    <path d="M1390,720 C1392,682 1395,644 1392,610
+             C1389,578 1385,556 1387,530
+             C1388,515 1387,504 1386,490"
+          stroke="#0c1808" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M1386,490 Q1365,478 1340,468 Q1364,474 1383,484 Z" fill="#0c1e08"/>
+    <path d="M1386,490 Q1370,468 1362,442 Q1368,464 1382,484 Z" fill="#0e2210"/>
+    <path d="M1386,490 Q1386,466 1386,440 Q1386,464 1386,484 Z" fill="#0c1e08"/>
+    <path d="M1386,490 Q1404,468 1410,442 Q1404,464 1389,484 Z" fill="#0e2210"/>
+    <path d="M1386,490 Q1406,478 1424,468 Q1406,474 1390,484 Z" fill="#0c1e08"/>
+  </g>
+
+  <!-- ── SURFBOARDS ON BEACH ─────────────────────────────── -->
+  <!-- Board 1 – blue, leaning right -->
+  <g transform="translate(310,596) rotate(-20)">
+    <ellipse cx="0" cy="0" rx="9"  ry="68" fill="#2050c0" opacity="0.88"/>
+    <ellipse cx="0" cy="-56" rx="5" ry="12" fill="#1038a0" opacity="0.9"/>
+    <rect x="-7" y="-22" width="14" height="5" rx="2" fill="#fff"    opacity="0.45"/>
+    <rect x="-7" y="-12" width="14" height="5" rx="2" fill="#e03830" opacity="0.70"/>
+  </g>
+
+  <!-- Board 2 – red-orange, leaning more -->
+  <g transform="translate(82,628) rotate(-28)">
+    <ellipse cx="0" cy="0" rx="7"  ry="54" fill="#d84020" opacity="0.82"/>
+    <ellipse cx="0" cy="-44" rx="4" ry="10" fill="#b02810" opacity="0.9"/>
+    <rect x="-5" y="-8"  width="10" height="3" rx="1" fill="#fff"    opacity="0.38"/>
+  </g>
+
+  <!-- ── FINISHING OVERLAYS ──────────────────────────────── -->
+  <!-- Vignette darkens edges for depth -->
+  <rect width="1440" height="720" fill="url(#vignette)"/>
+
+  <!-- Left-side text readability overlay -->
+  <rect width="1440" height="720" fill="url(#textOverlay)"/>
+
+</svg>

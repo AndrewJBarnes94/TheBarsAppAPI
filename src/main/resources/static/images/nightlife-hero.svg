@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice">
+  <defs>
+
+    <!-- Deep night sky -->
+    <linearGradient id="nightSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#020508"/>
+      <stop offset="35%"  stop-color="#060b18"/>
+      <stop offset="68%"  stop-color="#0c1228"/>
+      <stop offset="100%" stop-color="#120c04"/>
+    </linearGradient>
+
+    <!-- City ambient glow – warm amber rising from buildings -->
+    <radialGradient id="cityGlow" cx="50%" cy="82%" r="62%">
+      <stop offset="0%"   stop-color="#f59e0b" stop-opacity="0.55"/>
+      <stop offset="28%"  stop-color="#c2540a" stop-opacity="0.28"/>
+      <stop offset="60%"  stop-color="#7a2e02" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#0a0808" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Secondary glow, slightly left of centre (downtown cluster) -->
+    <radialGradient id="cityGlow2" cx="38%" cy="80%" r="40%">
+      <stop offset="0%"   stop-color="#ff8c00" stop-opacity="0.30"/>
+      <stop offset="55%"  stop-color="#a03800" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+
+    <!-- Water reflection at base -->
+    <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0e1828"/>
+      <stop offset="100%" stop-color="#05080e"/>
+    </linearGradient>
+
+    <!-- Reflection shimmer strip -->
+    <linearGradient id="shimmer" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#f59e0b" stop-opacity="0.45"/>
+      <stop offset="60%"  stop-color="#f59e0b" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="72%">
+      <stop offset="0%"   stop-color="transparent"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.55)"/>
+    </radialGradient>
+
+    <!-- Centred text readability overlay -->
+    <radialGradient id="textOverlay" cx="50%" cy="42%" r="50%">
+      <stop offset="0%"   stop-color="rgba(0,0,0,0.25)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+
+    <!-- Bokeh soft-glow helper: repeated radial per circle -->
+    <!-- (simulated with multiple concentric circles per light point) -->
+
+  </defs>
+
+  <!-- ── BASE SKY ───────────────────────────────────────── -->
+  <rect width="1440" height="720" fill="url(#nightSky)"/>
+
+  <!-- City ambient glow layers -->
+  <rect width="1440" height="720" fill="url(#cityGlow)"/>
+  <rect width="1440" height="720" fill="url(#cityGlow2)"/>
+
+  <!-- ── STARS ──────────────────────────────────────────── -->
+  <g fill="#ffffff">
+    <circle cx="105"  cy="72"  r="1.2" opacity="0.75"/>
+    <circle cx="218"  cy="44"  r="0.9" opacity="0.60"/>
+    <circle cx="320"  cy="98"  r="1.0" opacity="0.65"/>
+    <circle cx="388"  cy="32"  r="1.3" opacity="0.72"/>
+    <circle cx="462"  cy="78"  r="0.8" opacity="0.55"/>
+    <circle cx="544"  cy="52"  r="1.1" opacity="0.68"/>
+    <circle cx="618"  cy="22"  r="0.9" opacity="0.58"/>
+    <circle cx="695"  cy="88"  r="1.0" opacity="0.62"/>
+    <circle cx="755"  cy="38"  r="1.2" opacity="0.70"/>
+    <circle cx="838"  cy="66"  r="0.8" opacity="0.55"/>
+    <circle cx="912"  cy="28"  r="1.0" opacity="0.65"/>
+    <circle cx="988"  cy="92"  r="1.3" opacity="0.72"/>
+    <circle cx="1068" cy="48"  r="0.9" opacity="0.60"/>
+    <circle cx="1138" cy="75"  r="1.1" opacity="0.66"/>
+    <circle cx="1218" cy="35"  r="1.0" opacity="0.62"/>
+    <circle cx="1295" cy="82"  r="1.3" opacity="0.72"/>
+    <circle cx="1365" cy="48"  r="0.9" opacity="0.58"/>
+    <circle cx="175"  cy="138" r="0.8" opacity="0.42"/>
+    <circle cx="445"  cy="122" r="0.9" opacity="0.45"/>
+    <circle cx="648"  cy="140" r="0.8" opacity="0.40"/>
+    <circle cx="875"  cy="115" r="1.0" opacity="0.48"/>
+    <circle cx="1110" cy="132" r="0.8" opacity="0.42"/>
+    <circle cx="1320" cy="118" r="0.9" opacity="0.45"/>
+  </g>
+
+  <!-- ── BACKGROUND BOKEH (distant, very soft) ──────────── -->
+  <!-- Each bokeh "dot" = concentric circles fading outward -->
+  <g>
+    <!-- Far-left cluster -->
+    <circle cx="155"  cy="420" r="38" fill="#f59e0b" opacity="0.025"/>
+    <circle cx="155"  cy="420" r="22" fill="#f59e0b" opacity="0.04"/>
+    <circle cx="155"  cy="420" r="10" fill="#ffc060" opacity="0.07"/>
+
+    <circle cx="290"  cy="460" r="28" fill="#ff8c00" opacity="0.03"/>
+    <circle cx="290"  cy="460" r="14" fill="#ff8c00" opacity="0.06"/>
+    <circle cx="290"  cy="460" r="6"  fill="#ffaa20" opacity="0.09"/>
+
+    <circle cx="408"  cy="400" r="32" fill="#f59e0b" opacity="0.025"/>
+    <circle cx="408"  cy="400" r="18" fill="#f59e0b" opacity="0.045"/>
+    <circle cx="408"  cy="400" r="8"  fill="#ffc040" opacity="0.07"/>
+
+    <!-- Centre bokeh -->
+    <circle cx="640"  cy="440" r="42" fill="#f59e0b" opacity="0.022"/>
+    <circle cx="640"  cy="440" r="24" fill="#f59e0b" opacity="0.040"/>
+    <circle cx="640"  cy="440" r="10" fill="#ffb820" opacity="0.065"/>
+
+    <circle cx="800"  cy="410" r="35" fill="#ff8c00" opacity="0.025"/>
+    <circle cx="800"  cy="410" r="20" fill="#ff8c00" opacity="0.045"/>
+    <circle cx="800"  cy="410" r="9"  fill="#ffaa30" opacity="0.068"/>
+
+    <!-- Right cluster -->
+    <circle cx="1050" cy="430" r="38" fill="#f59e0b" opacity="0.025"/>
+    <circle cx="1050" cy="430" r="22" fill="#f59e0b" opacity="0.04"/>
+    <circle cx="1050" cy="430" r="10" fill="#ffc060" opacity="0.07"/>
+
+    <circle cx="1210" cy="460" r="30" fill="#ff8c00" opacity="0.028"/>
+    <circle cx="1210" cy="460" r="16" fill="#ff8c00" opacity="0.052"/>
+    <circle cx="1210" cy="460" r="7"  fill="#ffaa20" opacity="0.08"/>
+
+    <circle cx="1355" cy="400" r="25" fill="#f59e0b" opacity="0.03"/>
+    <circle cx="1355" cy="400" r="13" fill="#f59e0b" opacity="0.055"/>
+    <circle cx="1355" cy="400" r="5"  fill="#ffc040" opacity="0.085"/>
+  </g>
+
+  <!-- ── BACK ROW BUILDINGS (distant, shorter, desaturated) ─── -->
+  <g fill="#0a0d1a">
+    <!-- Far-left low -->
+    <rect x="0"    y="392" width="52"  height="198"/>
+    <rect x="42"   y="368" width="38"  height="222"/>
+    <rect x="75"   y="348" width="55"  height="242"/>
+    <!-- Left cluster -->
+    <rect x="122"  y="318" width="68"  height="272"/>
+    <rect x="182"  y="340" width="48"  height="250"/>
+    <rect x="224"  y="305" width="72"  height="285"/>
+    <rect x="292"  y="332" width="55"  height="258"/>
+    <rect x="340"  y="348" width="62"  height="242"/>
+    <!-- Left-centre -->
+    <rect x="395"  y="288" width="78"  height="302"/>
+    <rect x="468"  y="315" width="58"  height="275"/>
+    <rect x="520"  y="298" width="70"  height="292"/>
+    <rect x="585"  y="325" width="52"  height="265"/>
+    <!-- Tallest skyscraper (centre-left) -->
+    <rect x="630"  y="200" width="88"  height="390"/>
+    <rect x="645"  y="182" width="58"  height="20"/>
+    <rect x="655"  y="170" width="38"  height="14"/>
+    <rect x="668"  y="156" width="12"  height="18"/><!-- antenna -->
+    <!-- Centre-right cluster -->
+    <rect x="725"  y="258" width="75"  height="332"/>
+    <rect x="795"  y="282" width="62"  height="308"/>
+    <rect x="852"  y="235" width="82"  height="355"/>
+    <rect x="928"  y="268" width="65"  height="322"/>
+    <!-- Right section -->
+    <rect x="985"  y="305" width="72"  height="285"/>
+    <rect x="1052" y="325" width="55"  height="265"/>
+    <rect x="1102" y="288" width="80"  height="302"/>
+    <rect x="1178" y="315" width="62"  height="275"/>
+    <rect x="1235" y="342" width="70"  height="248"/>
+    <rect x="1300" y="310" width="55"  height="280"/>
+    <rect x="1350" y="338" width="90"  height="252"/>
+    <rect x="1430" y="362" width="50"  height="228"/>
+  </g>
+
+  <!-- ── BUILDING WINDOWS – BACK ROW ─────────────────────── -->
+  <!-- Dense amber/gold window arrays on tall buildings -->
+  <!-- Left buildings -->
+  <g fill="#f5a030" opacity="0.62">
+    <rect x="128" y="328" width="7" height="5"/><rect x="142" y="328" width="7" height="5"/><rect x="156" y="328" width="7" height="5"/>
+    <rect x="128" y="344" width="7" height="5"/><rect x="156" y="344" width="7" height="5"/>
+    <rect x="142" y="360" width="7" height="5"/><rect x="156" y="360" width="7" height="5"/>
+    <rect x="128" y="376" width="7" height="5"/><rect x="142" y="376" width="7" height="5"/>
+    <rect x="156" y="392" width="7" height="5"/><rect x="128" y="408" width="7" height="5"/>
+    <rect x="142" y="408" width="7" height="5"/><rect x="128" y="424" width="7" height="5"/>
+
+    <rect x="230" y="315" width="8" height="5"/><rect x="245" y="315" width="8" height="5"/><rect x="260" y="315" width="8" height="5"/>
+    <rect x="230" y="332" width="8" height="5"/><rect x="260" y="332" width="8" height="5"/>
+    <rect x="245" y="349" width="8" height="5"/><rect x="230" y="366" width="8" height="5"/>
+    <rect x="260" y="366" width="8" height="5"/><rect x="245" y="383" width="8" height="5"/>
+    <rect x="230" y="400" width="8" height="5"/><rect x="260" y="400" width="8" height="5"/>
+    <rect x="245" y="417" width="8" height="5"/><rect x="230" y="434" width="8" height="5"/>
+  </g>
+
+  <!-- Centre tall tower windows – denser, brighter -->
+  <g fill="#ffc858" opacity="0.72">
+    <rect x="638" y="212" width="9" height="6"/><rect x="654" y="212" width="9" height="6"/><rect x="670" y="212" width="9" height="6"/><rect x="686" y="212" width="9" height="6"/>
+    <rect x="638" y="230" width="9" height="6"/><rect x="654" y="230" width="9" height="6"/><rect x="670" y="230" width="9" height="6"/><rect x="686" y="230" width="9" height="6"/>
+    <rect x="638" y="248" width="9" height="6"/><rect x="670" y="248" width="9" height="6"/><rect x="686" y="248" width="9" height="6"/>
+    <rect x="654" y="266" width="9" height="6"/><rect x="670" y="266" width="9" height="6"/>
+    <rect x="638" y="284" width="9" height="6"/><rect x="686" y="284" width="9" height="6"/>
+    <rect x="654" y="302" width="9" height="6"/><rect x="670" y="302" width="9" height="6"/>
+    <rect x="638" y="320" width="9" height="6"/><rect x="686" y="320" width="9" height="6"/>
+    <rect x="654" y="338" width="9" height="6"/><rect x="670" y="338" width="9" height="6"/>
+    <rect x="638" y="356" width="9" height="6"/><rect x="654" y="356" width="9" height="6"/>
+    <rect x="670" y="374" width="9" height="6"/><rect x="686" y="374" width="9" height="6"/>
+    <rect x="638" y="392" width="9" height="6"/><rect x="670" y="392" width="9" height="6"/>
+    <rect x="654" y="410" width="9" height="6"/><rect x="686" y="410" width="9" height="6"/>
+    <rect x="638" y="428" width="9" height="6"/><rect x="654" y="428" width="9" height="6"/>
+    <rect x="670" y="446" width="9" height="6"/>
+  </g>
+
+  <!-- Antenna light blink (red) -->
+  <circle cx="674" cy="158" r="4" fill="#ff3820" opacity="0.88"/>
+  <circle cx="674" cy="158" r="9" fill="#ff3820" opacity="0.22"/>
+
+  <!-- Right building windows -->
+  <g fill="#f5a030" opacity="0.58">
+    <rect x="862" y="246" width="9" height="6"/><rect x="878" y="246" width="9" height="6"/><rect x="894" y="246" width="9" height="6"/>
+    <rect x="862" y="264" width="9" height="6"/><rect x="894" y="264" width="9" height="6"/>
+    <rect x="878" y="282" width="9" height="6"/><rect x="862" y="300" width="9" height="6"/>
+    <rect x="894" y="300" width="9" height="6"/><rect x="878" y="318" width="9" height="6"/>
+    <rect x="862" y="336" width="9" height="6"/><rect x="894" y="336" width="9" height="6"/>
+    <rect x="878" y="354" width="9" height="6"/><rect x="862" y="372" width="9" height="6"/>
+    <rect x="894" y="372" width="9" height="6"/><rect x="878" y="390" width="9" height="6"/>
+    <rect x="862" y="408" width="9" height="6"/><rect x="862" y="426" width="9" height="6"/>
+    <rect x="894" y="426" width="9" height="6"/>
+
+    <rect x="1110" y="298" width="8" height="5"/><rect x="1124" y="298" width="8" height="5"/><rect x="1138" y="298" width="8" height="5"/>
+    <rect x="1110" y="315" width="8" height="5"/><rect x="1138" y="315" width="8" height="5"/>
+    <rect x="1124" y="332" width="8" height="5"/><rect x="1110" y="349" width="8" height="5"/>
+    <rect x="1138" y="349" width="8" height="5"/><rect x="1124" y="366" width="8" height="5"/>
+    <rect x="1110" y="383" width="8" height="5"/><rect x="1138" y="383" width="8" height="5"/>
+    <rect x="1124" y="400" width="8" height="5"/><rect x="1110" y="417" width="8" height="5"/>
+    <rect x="1138" y="417" width="8" height="5"/>
+  </g>
+
+  <!-- ── FRONT ROW BUILDINGS (closer, darker, no windows) ──── -->
+  <g fill="#060810">
+    <rect x="0"    y="468" width="75"  height="142"/>
+    <rect x="65"   y="448" width="95"  height="162"/>
+    <rect x="150"  y="432" width="80"  height="178"/>
+    <rect x="220"  y="452" width="60"  height="158"/>
+    <rect x="275"  y="440" width="88"  height="170"/>
+    <rect x="355"  y="462" width="65"  height="148"/>
+    <rect x="412"  y="425" width="100" height="185"/>
+    <rect x="505"  y="445" width="72"  height="165"/>
+    <rect x="572"  y="435" width="85"  height="175"/>
+    <rect x="650"  y="418" width="110" height="192"/>
+    <rect x="755"  y="438" width="90"  height="172"/>
+    <rect x="840"  y="452" width="78"  height="158"/>
+    <rect x="912"  y="428" width="105" height="182"/>
+    <rect x="1010" y="448" width="85"  height="162"/>
+    <rect x="1090" y="435" width="78"  height="175"/>
+    <rect x="1162" y="458" width="68"  height="152"/>
+    <rect x="1225" y="440" width="95"  height="170"/>
+    <rect x="1315" y="455" width="78"  height="155"/>
+    <rect x="1385" y="442" width="55"  height="168"/>
+  </g>
+
+  <!-- ── WATER / WATERFRONT ──────────────────────────────── -->
+  <rect x="0" y="590" width="1440" height="130" fill="url(#waterGrad)"/>
+
+  <!-- Horizon line -->
+  <rect x="0" y="588" width="1440" height="3" fill="#1e2840" opacity="0.8"/>
+
+  <!-- Reflection shimmer strips -->
+  <ellipse cx="720"  cy="628" rx="62"  ry="100" fill="url(#shimmer)"/>
+  <ellipse cx="400"  cy="645" rx="30"  ry="65"  fill="#f59e0b" opacity="0.06"/>
+  <ellipse cx="1040" cy="638" rx="35"  ry="70"  fill="#f59e0b" opacity="0.07"/>
+  <ellipse cx="250"  cy="655" rx="18"  ry="45"  fill="#ff8c00" opacity="0.05"/>
+  <ellipse cx="1200" cy="650" rx="22"  ry="50"  fill="#ff8c00" opacity="0.06"/>
+
+  <!-- Water surface ripple lines -->
+  <g stroke="#2a3850" stroke-width="1" fill="none" opacity="0.45">
+    <path d="M0,600 Q360,594 720,600 Q1080,606 1440,600"/>
+    <path d="M0,610 Q360,604 720,610 Q1080,616 1440,610"/>
+    <path d="M0,622 Q360,616 720,622 Q1080,628 1440,622"/>
+    <path d="M0,636 Q360,630 720,636 Q1080,642 1440,636"/>
+    <path d="M0,650 Q360,644 720,650 Q1080,656 1440,650"/>
+    <path d="M0,665 Q360,659 720,665 Q1080,671 1440,665"/>
+  </g>
+
+  <!-- ── FOREGROUND BOKEH (close, brighter, larger) ──────── -->
+  <g>
+    <!-- Left-foreground -->
+    <circle cx="88"   cy="555" r="55" fill="#f59e0b" opacity="0.04"/>
+    <circle cx="88"   cy="555" r="32" fill="#f59e0b" opacity="0.07"/>
+    <circle cx="88"   cy="555" r="15" fill="#ffc050" opacity="0.12"/>
+    <circle cx="88"   cy="555" r="6"  fill="#ffd878" opacity="0.18"/>
+
+    <circle cx="280"  cy="572" r="42" fill="#ff8c00" opacity="0.042"/>
+    <circle cx="280"  cy="572" r="24" fill="#ff8c00" opacity="0.075"/>
+    <circle cx="280"  cy="572" r="10" fill="#ffaa30" opacity="0.12"/>
+    <circle cx="280"  cy="572" r="4"  fill="#ffcc60" opacity="0.20"/>
+
+    <!-- Right-foreground -->
+    <circle cx="1160" cy="562" r="50" fill="#f59e0b" opacity="0.040"/>
+    <circle cx="1160" cy="562" r="28" fill="#f59e0b" opacity="0.070"/>
+    <circle cx="1160" cy="562" r="12" fill="#ffc050" opacity="0.115"/>
+    <circle cx="1160" cy="562" r="5"  fill="#ffd878" opacity="0.175"/>
+
+    <circle cx="1360" cy="548" r="38" fill="#ff8c00" opacity="0.038"/>
+    <circle cx="1360" cy="548" r="22" fill="#ff8c00" opacity="0.068"/>
+    <circle cx="1360" cy="548" r="9"  fill="#ffaa30" opacity="0.11"/>
+    <circle cx="1360" cy="548" r="4"  fill="#ffcc60" opacity="0.18"/>
+
+    <!-- Small accent pops of light -->
+    <circle cx="490"  cy="535" r="22" fill="#ffa030" opacity="0.05"/>
+    <circle cx="490"  cy="535" r="10" fill="#ffa030" opacity="0.10"/>
+    <circle cx="490"  cy="535" r="4"  fill="#ffcc50" opacity="0.18"/>
+
+    <circle cx="950"  cy="542" r="26" fill="#f59e0b" opacity="0.048"/>
+    <circle cx="950"  cy="542" r="12" fill="#f59e0b" opacity="0.092"/>
+    <circle cx="950"  cy="542" r="5"  fill="#ffc860" opacity="0.16"/>
+  </g>
+
+  <!-- ── FINISHING OVERLAYS ──────────────────────────────── -->
+  <!-- Vignette for depth and drama -->
+  <rect width="1440" height="720" fill="url(#vignette)"/>
+
+  <!-- Centred text-readability softener -->
+  <rect width="1440" height="720" fill="url(#textOverlay)"/>
+
+</svg>
