@@ -1,15 +1,13 @@
 package com.fellasbar.api.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PublicController {
 
     @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("bodyClass", "coastal");
+    public String home() {
         return "home";
     }
 
@@ -24,20 +22,17 @@ public class PublicController {
     }
 
     @GetMapping("/vlogs")
-    public String vlogs(Model model) {
-        model.addAttribute("bodyClass", "coastal");
+    public String vlogs() {
         return "vlogs";
     }
 
     @GetMapping("/blog")
-    public String blog(Model model) {
-        model.addAttribute("bodyClass", "coastal");
+    public String blog() {
         return "blog";
     }
 
     @GetMapping("/store")
-    public String store(Model model) {
-        model.addAttribute("bodyClass", "coastal");
+    public String store() {
         return "store";
     }
 }

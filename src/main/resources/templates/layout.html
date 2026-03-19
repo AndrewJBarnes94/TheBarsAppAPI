@@ -6,7 +6,7 @@
     <title th:text="${pageTitle != null ? pageTitle + ' — Fellas' : 'Fellas'}">Fellas</title>
     <link rel="stylesheet" th:href="@{/css/site.css}">
 </head>
-<body th:class="${bodyClass}">
+<body>
 
 <nav class="site-nav">
     <a th:href="@{/}" class="site-brand">Fellas</a>
@@ -16,8 +16,8 @@
     <div class="site-nav-links">
         <a th:href="@{/vlogs}">Vlogs</a>
         <a th:href="@{/blog}">Blog</a>
-        <a th:href="@{/store}">Shop</a>
-        <a th:href="@{/thebarsapp}" class="nav-download-btn">Download App</a>
+        <a th:href="@{/store}">Store</a>
+        <a th:href="@{/thebarsapp}" class="nav-app-pill">The Bars App ↗</a>
     </div>
 </nav>
 
@@ -28,7 +28,7 @@
     <div class="footer-links">
         <a th:href="@{/vlogs}">Vlogs</a>
         <a th:href="@{/blog}">Blog</a>
-        <a th:href="@{/store}">Shop</a>
+        <a th:href="@{/store}">Store</a>
         <a th:href="@{/thebarsapp}">The Bars App</a>
     </div>
 </footer>
