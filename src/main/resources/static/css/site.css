@@ -35,12 +35,15 @@ body {
 }
 
 .site-brand {
-    font-size: 1.35rem;
-    font-weight: 800;
-    color: #fff;
     text-decoration: none;
-    letter-spacing: -0.02em;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.nav-brand-img {
+    height: 60px;
+    width: auto;
 }
 
 .site-nav-links {
@@ -243,9 +246,23 @@ body {
 /* ── Page Hero (interior pages: vlogs, blog, store) ─── */
 
 .page-hero {
-    padding: 5rem 2rem 3.5rem;
-    max-width: 800px;
-    margin: 0 auto;
+    padding: 7rem 2rem 5rem;
+    max-width: 100%;
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.75)), url('/Images/Tropical Beach Party.png') center/cover no-repeat;
+}
+
+.page-hero-content {
+    align-self: center;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem 3rem;
+    text-align: center;
 }
 
 .page-hero h1 {
@@ -541,10 +558,24 @@ body {
     margin-right: auto;
 }
 
+/* ── Tiki Background (vlogs, blog, store cards) ─────── */
+
+.content-section.tiki-bg {
+    max-width: 100%;
+    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('/Images/Tiki Bar and Palm Island Sunset.png') center/cover no-repeat;
+    padding: 4.5rem 2rem;
+}
+
+.content-section.tiki-bg > * {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* ── Lifestyle Section ──────────────────────────────── */
 
 .lifestyle-section {
-    background: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.72)), url('/Images/Beach Retreat with Friends.png') center/cover no-repeat;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/Images/Beach Retreat with Friends.png') center/cover no-repeat;
     padding: 5rem 2rem;
 }
 
@@ -577,7 +608,7 @@ body {
 }
 
 .lifestyle-card {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 14px;
@@ -790,7 +821,7 @@ body {
     }
 
     .lifestyle-card {
-        aspect-ratio: 3 / 1;
+        aspect-ratio: 4 / 1;
         min-width: 0;
     }
 
