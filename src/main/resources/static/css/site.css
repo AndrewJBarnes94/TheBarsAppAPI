@@ -6,11 +6,16 @@
     padding: 0;
 }
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: #0a0a0a;
     color: #e0e0e0;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 /* ── Nav ────────────────────────────────────────────── */
@@ -767,13 +772,35 @@ body {
 
     .card-grid { grid-template-columns: 1fr; }
 
-    .lifestyle-cards { grid-template-columns: 1fr; }
+    .content-section { padding: 3rem 1.25rem; }
+
+    .content-section.alt-bg { padding: 3rem 1.25rem; }
+
+    .content-section.featured-merch { padding: 3rem 1.25rem; }
+
+    .lifestyle-section { padding: 3rem 1.25rem; }
+
+    .lifestyle-inner { margin-bottom: 2rem; }
+
+    .lifestyle-inner p { font-size: 1rem; }
+
+    .lifestyle-cards {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .lifestyle-card {
+        aspect-ratio: 3 / 1;
+        min-width: 0;
+    }
 
     .brand-hero { min-height: auto; padding: 4rem 1.5rem; }
 
-    .brand-hero-content h1 { white-space: normal; }
+    .hero-logo { width: min(320px, 80vw); }
 
-    .hero-ctas { flex-direction: column; align-items: flex-start; }
+    .brand-hero-content h1 { white-space: normal; font-size: clamp(1.8rem, 8vw, 3rem); }
+
+    .hero-ctas { flex-direction: column; align-items: center; }
 
     .section-header { flex-direction: column; gap: 0.5rem; }
 
