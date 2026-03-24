@@ -11,12 +11,12 @@
         </div>
     </section>
 
-    <!-- TODO: Wire up Stripe/payment processing for cart & checkout -->
     <section class="content-section tiki-bg">
-        <div class="store-notice">
-            <span>🚧</span> Store coming soon — checkout will be available shortly.
+        <div th:if="${param.error}" class="store-notice" style="background:#2a0a0a; border-color:#c0392b; color:#e74c3c;">
+            <span>⚠️</span> Something went wrong with checkout. Please try again.
         </div>
         <div class="product-grid">
+
             <div class="product-card">
                 <div class="product-thumb"></div>
                 <div class="product-info">
@@ -24,10 +24,15 @@
                     <p class="product-desc">100% cotton, oversized fit. Black.</p>
                     <div class="product-bottom">
                         <span class="product-price">$35</span>
-                        <button class="btn-cart" disabled>Coming Soon</button>
+                        <form th:action="@{/store/checkout}" method="post">
+                            <input type="hidden" name="productName" value="Fellas Heavyweight Tee"/>
+                            <input type="hidden" name="priceCents" value="3500"/>
+                            <button type="submit" class="btn-cart">Buy Now</button>
+                        </form>
                     </div>
                 </div>
             </div>
+
             <div class="product-card">
                 <div class="product-thumb"></div>
                 <div class="product-info">
@@ -35,10 +40,15 @@
                     <p class="product-desc">Heavyweight fleece. Washed black.</p>
                     <div class="product-bottom">
                         <span class="product-price">$65</span>
-                        <button class="btn-cart" disabled>Coming Soon</button>
+                        <form th:action="@{/store/checkout}" method="post">
+                            <input type="hidden" name="productName" value="Tampa Bay Nights Hoodie"/>
+                            <input type="hidden" name="priceCents" value="6500"/>
+                            <button type="submit" class="btn-cart">Buy Now</button>
+                        </form>
                     </div>
                 </div>
             </div>
+
             <div class="product-card">
                 <div class="product-thumb"></div>
                 <div class="product-info">
@@ -46,10 +56,15 @@
                     <p class="product-desc">6-panel structured cap. One size.</p>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
-                        <button class="btn-cart" disabled>Coming Soon</button>
+                        <form th:action="@{/store/checkout}" method="post">
+                            <input type="hidden" name="productName" value="Fellas Snapback"/>
+                            <input type="hidden" name="priceCents" value="3000"/>
+                            <button type="submit" class="btn-cart">Buy Now</button>
+                        </form>
                     </div>
                 </div>
             </div>
+
             <div class="product-card">
                 <div class="product-thumb"></div>
                 <div class="product-info">
@@ -57,10 +72,15 @@
                     <p class="product-desc">Unstructured cotton twill. Natural.</p>
                     <div class="product-bottom">
                         <span class="product-price">$28</span>
-                        <button class="btn-cart" disabled>Coming Soon</button>
+                        <form th:action="@{/store/checkout}" method="post">
+                            <input type="hidden" name="productName" value="Fellas Bucket Hat"/>
+                            <input type="hidden" name="priceCents" value="2800"/>
+                            <button type="submit" class="btn-cart">Buy Now</button>
+                        </form>
                     </div>
                 </div>
             </div>
+
             <div class="product-card">
                 <div class="product-thumb"></div>
                 <div class="product-info">
@@ -68,10 +88,15 @@
                     <p class="product-desc">Vintage wash, relaxed fit. White.</p>
                     <div class="product-bottom">
                         <span class="product-price">$35</span>
-                        <button class="btn-cart" disabled>Coming Soon</button>
+                        <form th:action="@{/store/checkout}" method="post">
+                            <input type="hidden" name="productName" value="Last Round Tee"/>
+                            <input type="hidden" name="priceCents" value="3500"/>
+                            <button type="submit" class="btn-cart">Buy Now</button>
+                        </form>
                     </div>
                 </div>
             </div>
+
             <div class="product-card">
                 <div class="product-thumb"></div>
                 <div class="product-info">
@@ -79,10 +104,15 @@
                     <p class="product-desc">7" inseam, nylon. Black.</p>
                     <div class="product-bottom">
                         <span class="product-price">$45</span>
-                        <button class="btn-cart" disabled>Coming Soon</button>
+                        <form th:action="@{/store/checkout}" method="post">
+                            <input type="hidden" name="productName" value="Fellas Shorts"/>
+                            <input type="hidden" name="priceCents" value="4500"/>
+                            <button type="submit" class="btn-cart">Buy Now</button>
+                        </form>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
