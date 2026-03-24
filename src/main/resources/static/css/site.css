@@ -168,11 +168,13 @@ body {
     min-height: 90vh;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 5rem 2rem;
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/Images/2 Surfboards Beach Sunset.png') center/cover no-repeat;
 }
 
 .brand-hero-content {
+    width: 100%;
     max-width: 1000px;
     margin: 0 auto;
     text-align: center;
@@ -181,8 +183,11 @@ body {
 .hero-logo {
     width: 520px;
     height: auto;
-    margin: 0 auto 2rem;
     display: block;
+    margin: 0 auto 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateX(-12px);
     mix-blend-mode: screen;
 }
 
