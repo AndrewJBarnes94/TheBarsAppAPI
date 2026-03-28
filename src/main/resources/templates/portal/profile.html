@@ -4,6 +4,7 @@
 <div th:fragment="content">
     <div class="page-header">
         <h1>Profile</h1>
+        <a th:href="@{/portal/dashboard}" class="btn">← Dashboard</a>
     </div>
 
     <div th:if="${param.saved}" class="alert alert-success">Changes saved successfully.</div>
