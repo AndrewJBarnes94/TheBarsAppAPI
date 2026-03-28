@@ -7,11 +7,48 @@
         <a th:href="@{/admin/business-users/new}" class="btn btn-primary">+ New Business User</a>
     </div>
 
-    <div th:if="${#lists.isEmpty(businessUsers)}" class="empty-state">
-        <p>No business users yet. Create one to give a venue owner access to their portal.</p>
+    <div th:if="${param.approved}" class="alert alert-success">Request approved — portal account is now active.</div>
+    <div th:if="${param.rejected}" class="alert alert-warning">Request rejected and removed.</div>
+
+    <!-- Pending Requests -->
+    <div th:if="${not #lists.isEmpty(pendingUsers)}">
+        <h2 style="margin-bottom:1rem;">Pending Requests <span class="badge badge-pending" th:text="${#lists.size(pendingUsers)}"></span></h2>
+        <table class="data-table" style="margin-bottom:2.5rem;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Venue Name</th>
+                    <th>Requested</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="bu : ${pendingUsers}">
+                    <td th:text="${bu.name}"></td>
+                    <td th:text="${bu.email}"></td>
+                    <td th:text="${bu.venueName ?: '—'}"></td>
+                    <td th:text="${bu.requestedAt != null ? bu.requestedAt.toString().substring(0,10) : '—'}"></td>
+                    <td class="actions">
+                        <a th:href="@{/admin/business-users/{id}/approve(id=${bu.id})}" class="btn btn-sm btn-primary">Approve</a>
+                        <form th:action="@{/admin/business-users/{id}/reject(id=${bu.id})}" method="post" class="inline-form"
+                              onsubmit="return confirm('Reject and remove this request?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <table th:unless="${#lists.isEmpty(businessUsers)}" class="data-table">
+    <!-- Active / Inactive Users -->
+    <h2 style="margin-bottom:1rem;">Portal Accounts</h2>
+
+    <div th:if="${#lists.isEmpty(activeUsers)}" class="empty-state">
+        <p>No portal accounts yet. Create one manually or approve a pending request.</p>
+    </div>
+
+    <table th:unless="${#lists.isEmpty(activeUsers)}" class="data-table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -22,11 +59,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="bu : ${businessUsers}">
+            <tr th:each="bu : ${activeUsers}">
                 <td th:text="${bu.name}"></td>
                 <td th:text="${bu.email}"></td>
                 <td th:text="${bu.venue != null ? bu.venue.name : '—'}"></td>
-                <td><span class="badge" th:text="${bu.active ? 'Active' : 'Inactive'}"></span></td>
+                <td><span class="badge" th:text="${bu.status}"></span></td>
                 <td class="actions">
                     <form th:action="@{/admin/business-users/{id}/delete(id=${bu.id})}" method="post" class="inline-form"
                           onsubmit="return confirm('Delete this business user?');">

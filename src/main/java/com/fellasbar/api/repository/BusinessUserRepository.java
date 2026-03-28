@@ -11,4 +11,6 @@ public interface BusinessUserRepository extends JpaRepository<BusinessUser, Long
     boolean existsByEmail(String email);
     boolean existsByVenueId(Long venueId);
     List<BusinessUser> findAllByOrderByNameAsc();
+    List<BusinessUser> findByStatusOrderByRequestedAtAsc(BusinessUser.Status status);
+    List<BusinessUser> findByStatusNotOrderByNameAsc(BusinessUser.Status status);
 }

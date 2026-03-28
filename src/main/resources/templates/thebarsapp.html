@@ -45,6 +45,32 @@
         </div>
     </section>
 
+    <section class="venue-cta">
+        <div class="venue-cta-content">
+            <div class="venue-cta-text">
+                <p class="venue-cta-headline">Own a venue?</p>
+                <p class="venue-cta-sub">Already have an account? <a th:href="@{/portal/login}">Log in to manage your listing →</a></p>
+            </div>
+
+            <div class="venue-request-form" id="venue-request">
+                <p th:if="${param.request == 'sent'}" class="request-success">Your request was sent! We'll review it and be in touch.</p>
+                <p th:if="${param.request == 'duplicate'}" class="request-error">An account with that email already exists. <a th:href="@{/portal/login}">Log in here.</a></p>
+
+                <h3>Request access</h3>
+                <p>Fill out the form below and we'll set up your portal account.</p>
+                <form th:action="@{/listing-request}" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <div class="request-fields">
+                        <input type="text" name="name" placeholder="Your name" required/>
+                        <input type="email" name="email" placeholder="Email address" required/>
+                        <input type="text" name="venueName" placeholder="Venue name" required/>
+                        <button type="submit" class="btn-primary">Send Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
 </div>
 </body>
 </html>

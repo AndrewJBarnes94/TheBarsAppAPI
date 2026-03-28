@@ -245,7 +245,10 @@ public class AdminController {
 
     @GetMapping("/business-users")
     public String businessUsers(Model model) {
-        model.addAttribute("businessUsers", businessUserRepository.findAllByOrderByNameAsc());
+        model.addAttribute("pendingUsers",
+            businessUserRepository.findByStatusOrderByRequestedAtAsc(BusinessUser.Status.PENDING));
+        model.addAttribute("activeUsers",
+            businessUserRepository.findByStatusNotOrderByNameAsc(BusinessUser.Status.PENDING));
         return "admin/business-users";
     }
 
@@ -275,6 +278,46 @@ public class AdminController {
         auditService.log(principal.getName(), "CREATE", "BUSINESS_USER", null,
             "Created business user: " + email + " for venue: " + venue.getName());
         return "redirect:/admin/business-users";
+    }
+
+    @GetMapping("/business-users/{id}/approve")
+    public String approveBusinessUserForm(@PathVariable Long id, Model model) {
+        BusinessUser user = businessUserRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Business user not found: " + id));
+        model.addAttribute("user", user);
+        model.addAttribute("venues", venueService.findAllVenues());
+        return "admin/business-user-approve";
+    }
+
+    @PostMapping("/business-users/{id}/approve")
+    public String approveBusinessUser(@PathVariable Long id,
+                                       @RequestParam String password,
+                                       @RequestParam(required = false) Long venueId,
+                                       Principal principal) {
+        BusinessUser user = businessUserRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Business user not found: " + id));
+
+        user.setPassword(passwordEncoder.encode(password));
+        user.setStatus(BusinessUser.Status.ACTIVE);
+
+        if (venueId != null) {
+            venueService.findVenueById(venueId).ifPresent(user::setVenue);
+        }
+
+        businessUserRepository.save(user);
+        auditService.log(principal.getName(), "APPROVE", "BUSINESS_USER", id,
+            "Approved portal request for: " + user.getEmail());
+        return "redirect:/admin/business-users?approved=1";
+    }
+
+    @PostMapping("/business-users/{id}/reject")
+    public String rejectBusinessUser(@PathVariable Long id, Principal principal) {
+        businessUserRepository.findById(id).ifPresent(user -> {
+            auditService.log(principal.getName(), "REJECT", "BUSINESS_USER", id,
+                "Rejected portal request for: " + user.getEmail());
+            businessUserRepository.delete(user);
+        });
+        return "redirect:/admin/business-users?rejected=1";
     }
 
     @PostMapping("/business-users/{id}/delete")

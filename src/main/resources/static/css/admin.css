@@ -173,6 +173,8 @@ body {
 }
 .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
 .alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+.alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+.alert-warning { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
 
 /* Target venues grid */
 .target-grid {
@@ -211,6 +213,7 @@ body {
 .badge-create { background: #d1fae5; color: #065f46; }
 .badge-update { background: #fef3c7; color: #92400e; }
 .badge-delete { background: #fee2e2; color: #991b1b; }
+.badge-pending { background: #fef3c7; color: #92400e; font-weight: 700; }
 
 /* Subtitle in page header */
 .page-header { flex-direction: column; align-items: flex-start; }
