@@ -23,7 +23,16 @@ public class SchemaUpdater {
             );
             System.out.println("[SchemaUpdater] Made business_users.password nullable.");
         } catch (Exception e) {
-            // Already nullable or column doesn't exist — safe to ignore
+            // Already nullable — safe to ignore
+        }
+
+        try {
+            jdbcTemplate.execute(
+                "ALTER TABLE business_users DROP COLUMN IF EXISTS active"
+            );
+            System.out.println("[SchemaUpdater] Dropped legacy business_users.active column.");
+        } catch (Exception e) {
+            // Already dropped — safe to ignore
         }
     }
 }
