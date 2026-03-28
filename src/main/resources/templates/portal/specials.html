@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{portal/layout :: html}">
+<body>
+<div th:fragment="content">
+    <div class="page-header">
+        <h1>Specials</h1>
+    </div>
+
+    <!-- Existing specials -->
+    <div th:if="${#lists.isEmpty(specials)}" class="empty-state" style="margin-bottom:2rem;">
+        <p>No specials yet. Add one below.</p>
+    </div>
+
+    <table th:unless="${#lists.isEmpty(specials)}" class="data-table" style="margin-bottom:2.5rem;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="s : ${specials}">
+                <td th:text="${s.name}"></td>
+                <td th:text="${s.description ?: '—'}"></td>
+                <td th:text="${s.dayOfWeek ?: '—'}"></td>
+                <td th:text="${(s.startTime ?: '') + (s.endTime != null ? ' – ' + s.endTime : '')}"></td>
+                <td th:text="${s.specialPrice != null ? '$' + s.specialPrice : '—'}"></td>
+                <td>
+                    <form th:action="@{/portal/specials/{id}/delete(id=${s.id})}" method="post" class="inline-form"
+                          onsubmit="return confirm('Delete this special?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Add new special -->
+    <h2 style="margin-bottom:1rem;">Add a Special</h2>
+    <form th:action="@{/portal/specials}" method="post" class="form-card">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" required placeholder="Happy Hour, $3 Drafts, etc."/>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" name="description" placeholder="Optional details"/>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Day of Week</label>
+                <select name="dayOfWeek">
+                    <option value="">Every Day</option>
+                    <option th:each="day : ${daysOfWeek}" th:value="${day}" th:text="${day}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Start Time</label>
+                <input type="text" name="startTime" placeholder="4:00 PM"/>
+            </div>
+            <div class="form-group">
+                <label>End Time</label>
+                <input type="text" name="endTime" placeholder="7:00 PM"/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Original Price</label>
+                <input type="number" name="originalPrice" step="0.01" placeholder="0.00"/>
+            </div>
+            <div class="form-group">
+                <label>Special Price</label>
+                <input type="number" name="specialPrice" step="0.01" placeholder="0.00"/>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Add Special</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

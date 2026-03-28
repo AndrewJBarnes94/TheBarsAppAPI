@@ -70,8 +70,8 @@ public class StoreController {
                     // Fallback for API version mismatches — parse ID from raw JSON
                     try {
                         String raw = deserializer.getRawJson();
-                        sessionId = com.google.gson.JsonParser.parseString(raw)
-                            .getAsJsonObject().get("id").getAsString();
+                        sessionId = new com.fasterxml.jackson.databind.ObjectMapper()
+                            .readTree(raw).get("id").asText();
                     } catch (Exception ex) {
                         log.error("Could not extract session ID from event: {}", ex.getMessage());
                     }

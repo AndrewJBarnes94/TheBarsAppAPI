@@ -1,11 +1,14 @@
 package com.fellasbar.api.controller;
 
+import com.fellasbar.api.model.BusinessUser;
 import com.fellasbar.api.model.OperatingHours;
 import com.fellasbar.api.model.Special;
 import com.fellasbar.api.model.TargetVenue;
 import com.fellasbar.api.model.Venue;
+import com.fellasbar.api.repository.BusinessUserRepository;
 import com.fellasbar.api.service.AuditService;
 import com.fellasbar.api.service.VenueService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +32,15 @@ public class AdminController {
 
     private final VenueService venueService;
     private final AuditService auditService;
+    private final BusinessUserRepository businessUserRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AdminController(VenueService venueService, AuditService auditService) {
+    public AdminController(VenueService venueService, AuditService auditService,
+                           BusinessUserRepository businessUserRepository, PasswordEncoder passwordEncoder) {
         this.venueService = venueService;
         this.auditService = auditService;
+        this.businessUserRepository = businessUserRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // --- Dashboard ---
@@ -231,6 +239,52 @@ public class AdminController {
     public String auditLog(Model model) {
         model.addAttribute("logs", auditService.getAllLogs());
         return "admin/history";
+    }
+
+    // --- Business Users ---
+
+    @GetMapping("/business-users")
+    public String businessUsers(Model model) {
+        model.addAttribute("businessUsers", businessUserRepository.findAllByOrderByNameAsc());
+        return "admin/business-users";
+    }
+
+    @GetMapping("/business-users/new")
+    public String newBusinessUserForm(Model model) {
+        model.addAttribute("venues", venueService.findAllVenues());
+        return "admin/business-user-form";
+    }
+
+    @PostMapping("/business-users")
+    public String createBusinessUser(@RequestParam String name,
+                                      @RequestParam String email,
+                                      @RequestParam String password,
+                                      @RequestParam Long venueId,
+                                      Principal principal) {
+        if (businessUserRepository.existsByEmail(email)) {
+            return "redirect:/admin/business-users/new?error=email";
+        }
+        Venue venue = venueService.findVenueById(venueId)
+            .orElseThrow(() -> new IllegalArgumentException("Venue not found: " + venueId));
+        BusinessUser user = new BusinessUser();
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setVenue(venue);
+        businessUserRepository.save(user);
+        auditService.log(principal.getName(), "CREATE", "BUSINESS_USER", null,
+            "Created business user: " + email + " for venue: " + venue.getName());
+        return "redirect:/admin/business-users";
+    }
+
+    @PostMapping("/business-users/{id}/delete")
+    public String deleteBusinessUser(@PathVariable Long id, Principal principal) {
+        businessUserRepository.findById(id).ifPresent(user -> {
+            auditService.log(principal.getName(), "DELETE", "BUSINESS_USER", id,
+                "Deleted business user: " + user.getEmail());
+            businessUserRepository.delete(user);
+        });
+        return "redirect:/admin/business-users";
     }
 
     // --- Helpers ---

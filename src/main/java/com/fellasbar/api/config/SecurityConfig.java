@@ -1,5 +1,6 @@
 package com.fellasbar.api.config;
 
+import com.fellasbar.api.service.BusinessUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +8,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -54,10 +54,44 @@ public class SecurityConfig {
 
     @Bean
     @Order(2)
-    public SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain portalFilterChain(HttpSecurity http,
+                                                  BusinessUserDetailsService businessUserDetailsService) throws Exception {
         http
+            .securityMatcher("/portal/**")
+            .userDetailsService(businessUserDetailsService)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/css/**", "/js/**").permitAll()
+                .requestMatchers("/portal/login").permitAll()
+                .anyRequest().hasRole("BUSINESS")
+            )
+            .formLogin(form -> form
+                .loginPage("/portal/login")
+                .defaultSuccessUrl("/portal/dashboard", true)
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/portal/logout")
+                .logoutSuccessUrl("/portal/login?logout")
+                .permitAll()
+            );
+        return http.build();
+    }
+
+    @Bean
+    @Order(3)
+    public SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
+        var manager = new InMemoryUserDetailsManager(
+            User.builder().username(adminUsername).password(passwordEncoder().encode(adminPassword)).roles("ADMIN").build(),
+            User.builder().username("aj").password(passwordEncoder().encode(ajPassword)).roles("ADMIN").build(),
+            User.builder().username("bill").password(passwordEncoder().encode(billPassword)).roles("ADMIN").build(),
+            User.builder().username("dom").password(passwordEncoder().encode(domPassword)).roles("ADMIN").build(),
+            User.builder().username("seth").password(passwordEncoder().encode(sethPassword)).roles("ADMIN").build(),
+            User.builder().username("trevor").password(passwordEncoder().encode(trevorPassword)).roles("ADMIN").build(),
+            User.builder().username("jared").password(passwordEncoder().encode(jaredPassword)).roles("ADMIN").build()
+        );
+        http
+            .userDetailsService(manager)
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/css/**", "/js/**", "/Images/**").permitAll()
                 .requestMatchers("/admin/**").authenticated()
                 .anyRequest().permitAll()
             )
@@ -71,46 +105,6 @@ public class SecurityConfig {
                 .permitAll()
             );
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        var admin = User.builder()
-            .username(adminUsername)
-            .password(passwordEncoder().encode(adminPassword))
-            .roles("ADMIN")
-            .build();
-        var aj = User.builder()
-            .username("aj")
-            .password(passwordEncoder().encode(ajPassword))
-            .roles("ADMIN")
-            .build();
-        var bill = User.builder()
-            .username("bill")
-            .password(passwordEncoder().encode(billPassword))
-            .roles("ADMIN")
-            .build();
-        var dom = User.builder()
-            .username("dom")
-            .password(passwordEncoder().encode(domPassword))
-            .roles("ADMIN")
-            .build();
-        var seth = User.builder()
-            .username("seth")
-            .password(passwordEncoder().encode(sethPassword))
-            .roles("ADMIN")
-            .build();
-        var trevor = User.builder()
-            .username("trevor")
-            .password(passwordEncoder().encode(trevorPassword))
-            .roles("ADMIN")
-            .build();
-        var jared = User.builder()
-            .username("jared")
-            .password(passwordEncoder().encode(jaredPassword))
-            .roles("ADMIN")
-            .build();
-        return new InMemoryUserDetailsManager(admin, aj, bill, dom, seth, trevor, jared);
     }
 
     @Bean

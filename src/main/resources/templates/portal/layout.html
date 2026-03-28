@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${pageTitle != null ? pageTitle + ' — Fellas HQ' : 'Fellas HQ'}">Fellas HQ</title>
+    <title th:text="${pageTitle != null ? pageTitle + ' — Fellas Portal' : 'Fellas Portal'}">Fellas Portal</title>
     <link rel="stylesheet" th:href="@{/css/admin.css}">
 </head>
 <body>
     <nav class="top-nav">
-        <a th:href="@{/admin}" class="nav-brand">Fellas HQ</a>
+        <a th:href="@{/portal/dashboard}" class="nav-brand">Fellas Portal</a>
         <div class="nav-links">
-            <a th:href="@{/admin}">Dashboard</a>
-            <a th:href="@{/admin/targets}">Target List</a>
-            <a th:href="@{/admin/venues/new}">+ New Venue</a>
-            <a th:href="@{/admin/business-users}">Business Users</a>
-            <a th:href="@{/admin/history}">History</a>
-            <form th:action="@{/logout}" method="post" class="logout-form">
+            <a th:href="@{/portal/dashboard}">Dashboard</a>
+            <a th:href="@{/portal/profile}">Profile</a>
+            <a th:href="@{/portal/hours}">Hours</a>
+            <a th:href="@{/portal/specials}">Specials</a>
+            <form th:action="@{/portal/logout}" method="post" class="logout-form">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <button type="submit" class="btn-link">Logout</button>
             </form>

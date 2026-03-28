@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: html}">
+<body>
+<div th:fragment="content">
+    <div class="page-header">
+        <h1>Business Users</h1>
+        <a th:href="@{/admin/business-users/new}" class="btn btn-primary">+ New Business User</a>
+    </div>
+
+    <div th:if="${#lists.isEmpty(businessUsers)}" class="empty-state">
+        <p>No business users yet. Create one to give a venue owner access to their portal.</p>
+    </div>
+
+    <table th:unless="${#lists.isEmpty(businessUsers)}" class="data-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Venue</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="bu : ${businessUsers}">
+                <td th:text="${bu.name}"></td>
+                <td th:text="${bu.email}"></td>
+                <td th:text="${bu.venue != null ? bu.venue.name : '—'}"></td>
+                <td><span class="badge" th:text="${bu.active ? 'Active' : 'Inactive'}"></span></td>
+                <td class="actions">
+                    <form th:action="@{/admin/business-users/{id}/delete(id=${bu.id})}" method="post" class="inline-form"
+                          onsubmit="return confirm('Delete this business user?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

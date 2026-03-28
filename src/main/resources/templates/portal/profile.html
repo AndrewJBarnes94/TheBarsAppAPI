@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{portal/layout :: html}">
+<body>
+<div th:fragment="content">
+    <div class="page-header">
+        <h1>Profile</h1>
+    </div>
+
+    <div th:if="${param.saved}" class="alert alert-success">Changes saved successfully.</div>
+
+    <form th:action="@{/portal/profile}" method="post" class="form-card">
+        <div class="form-group">
+            <label>Venue Name</label>
+            <input type="text" name="name" required th:value="${venue.name}"/>
+        </div>
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="text" name="phone" th:value="${venue.phone}" placeholder="(555) 555-5555"/>
+        </div>
+        <div class="form-group">
+            <label>Website</label>
+            <input type="url" name="website" th:value="${venue.website}" placeholder="https://yourvenue.com"/>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" rows="4" placeholder="Tell people about your venue..." th:text="${venue.description}"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Image URL</label>
+            <input type="url" name="imageUrl" th:value="${venue.imageUrl}" placeholder="https://example.com/your-photo.jpg"/>
+            <small style="color:#666;">Paste a direct link to a photo of your venue.</small>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

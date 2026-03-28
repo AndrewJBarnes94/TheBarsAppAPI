@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout :: html}">
+<body>
+<div th:fragment="content">
+    <div class="page-header">
+        <h1>New Business User</h1>
+        <a th:href="@{/admin/business-users}" class="btn">← Back</a>
+    </div>
+
+    <div th:if="${param.error}" class="alert alert-error">
+        That email address is already in use.
+    </div>
+
+    <form th:action="@{/admin/business-users}" method="post" class="form-card">
+        <div class="form-group">
+            <label>Contact Name</label>
+            <input type="text" name="name" required placeholder="Jane Smith"/>
+        </div>
+        <div class="form-group">
+            <label>Email (login)</label>
+            <input type="email" name="email" required placeholder="owner@theirvenue.com"/>
+        </div>
+        <div class="form-group">
+            <label>Temporary Password</label>
+            <input type="text" name="password" required placeholder="They should change this after first login"/>
+        </div>
+        <div class="form-group">
+            <label>Venue</label>
+            <select name="venueId" required>
+                <option value="">— Select a venue —</option>
+                <option th:each="venue : ${venues}"
+                        th:value="${venue.id}"
+                        th:text="${venue.name}"></option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create Account</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

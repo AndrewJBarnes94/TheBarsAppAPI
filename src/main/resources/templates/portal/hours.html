@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{portal/layout :: html}">
+<body>
+<div th:fragment="content">
+    <div class="page-header">
+        <h1>Hours of Operation</h1>
+    </div>
+
+    <div th:if="${param.saved}" class="alert alert-success">Hours saved successfully.</div>
+
+    <form th:action="@{/portal/hours}" method="post" class="form-card">
+        <p style="color:#888; margin-bottom:1.5rem;">Enter hours as "11:00 AM - 10:00 PM" or leave blank if closed that day.</p>
+        <div th:each="day : ${daysOfWeek}" class="form-group form-row">
+            <label th:text="${day}" style="min-width:110px;"></label>
+            <input type="text"
+                   th:name="'hours_' + ${day}"
+                   th:value="${hoursMap[day]}"
+                   placeholder="Closed"/>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Hours</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
