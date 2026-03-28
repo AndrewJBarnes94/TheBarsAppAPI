@@ -549,6 +549,135 @@ body {
     margin-bottom: 2rem;
 }
 
+/* ── Cart ───────────────────────────────────────────── */
+
+.cart-bar {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #06d6a0;
+    color: #0a0a0a;
+    padding: 0.875rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+    display: none;
+    z-index: 100;
+    white-space: nowrap;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+    transition: transform 0.15s, background 0.15s;
+}
+.cart-bar.visible { display: block; }
+.cart-bar:hover { background: #04c490; transform: translateX(-50%) translateY(-2px); }
+
+.cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 199;
+    display: none;
+}
+.cart-overlay.visible { display: block; }
+
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    max-width: 100vw;
+    height: 100vh;
+    background: #111;
+    z-index: 200;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    box-shadow: -4px 0 32px rgba(0,0,0,0.6);
+}
+.cart-drawer.open { right: 0; }
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.cart-header h2 { font-size: 1.2rem; font-weight: 700; color: #fff; }
+.cart-close {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+.cart-close:hover { color: #fff; }
+
+.cart-items { flex: 1; overflow-y: auto; }
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #1e1e1e;
+}
+.cart-item-info { flex: 1; }
+.cart-item-name { font-weight: 600; color: #e8e8e8; font-size: 0.9rem; }
+.cart-item-price { color: #666; font-size: 0.82rem; margin-top: 0.2rem; }
+
+.cart-item-qty { display: flex; align-items: center; gap: 0.6rem; }
+.qty-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: #ccc;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: border-color 0.15s, color 0.15s;
+}
+.qty-btn:hover { border-color: #06d6a0; color: #06d6a0; }
+.qty-num { color: #fff; font-weight: 600; min-width: 20px; text-align: center; }
+
+.cart-footer {
+    padding-top: 1.25rem;
+    border-top: 1px solid #1e1e1e;
+    margin-top: 0.5rem;
+}
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+.cart-total-amount { color: #06d6a0; }
+.btn-checkout {
+    width: 100%;
+    padding: 0.875rem;
+    background: #06d6a0;
+    color: #0a0a0a;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.btn-checkout:hover { background: #04c490; }
+.btn-checkout:disabled { opacity: 0.5; cursor: not-allowed; }
+
 /* ── Featured Merch ─────────────────────────────────── */
 
 .content-section.featured-merch {

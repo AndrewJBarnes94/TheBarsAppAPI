@@ -3,6 +3,10 @@
 <body>
 <div th:fragment="content">
 
+    <!-- CSRF tokens for JS fetch -->
+    <input type="hidden" id="csrf-token" th:value="${_csrf.token}"/>
+    <input type="hidden" id="csrf-header" th:value="${_csrf.headerName}"/>
+
     <section class="page-hero">
         <div class="page-hero-content">
             <p class="eyebrow">Fellas · Merch</p>
@@ -24,11 +28,11 @@
                     <p class="product-desc">100% cotton, oversized fit. Black.</p>
                     <div class="product-bottom">
                         <span class="product-price">$35</span>
-                        <form th:action="@{/store/checkout}" method="post">
-                            <input type="hidden" name="productName" value="Fellas Heavyweight Tee"/>
-                            <input type="hidden" name="priceCents" value="3500"/>
-                            <button type="submit" class="btn-cart">Buy Now</button>
-                        </form>
+                        <button class="btn-cart"
+                                data-name="Fellas Heavyweight Tee"
+                                data-price-cents="3500"
+                                data-price-display="$35"
+                                onclick="addToCart(this)">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -40,27 +44,27 @@
                     <p class="product-desc">6-panel structured cap. One size.</p>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
-                        <form th:action="@{/store/checkout}" method="post">
-                            <input type="hidden" name="productName" value="Fellas Snapback"/>
-                            <input type="hidden" name="priceCents" value="3000"/>
-                            <button type="submit" class="btn-cart">Buy Now</button>
-                        </form>
+                        <button class="btn-cart"
+                                data-name="Fellas Snapback"
+                                data-price-cents="3000"
+                                data-price-display="$30"
+                                onclick="addToCart(this)">Add to Cart</button>
                     </div>
                 </div>
             </div>
 
-<div class="product-card">
+            <div class="product-card">
                 <div class="product-thumb"></div>
                 <div class="product-info">
                     <h3>Fellas Koozie</h3>
                     <p class="product-desc">Neoprene can cooler. Fellas logo.</p>
                     <div class="product-bottom">
                         <span class="product-price">$8</span>
-                        <form th:action="@{/store/checkout}" method="post">
-                            <input type="hidden" name="productName" value="Fellas Koozie"/>
-                            <input type="hidden" name="priceCents" value="800"/>
-                            <button type="submit" class="btn-cart">Buy Now</button>
-                        </form>
+                        <button class="btn-cart"
+                                data-name="Fellas Koozie"
+                                data-price-cents="800"
+                                data-price-display="$8"
+                                onclick="addToCart(this)">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -72,17 +76,169 @@
                     <p class="product-desc">5 die-cut stickers. Stick 'em everywhere.</p>
                     <div class="product-bottom">
                         <span class="product-price">$5</span>
-                        <form th:action="@{/store/checkout}" method="post">
-                            <input type="hidden" name="productName" value="Fellas Sticker Pack"/>
-                            <input type="hidden" name="priceCents" value="500"/>
-                            <button type="submit" class="btn-cart">Buy Now</button>
-                        </form>
+                        <button class="btn-cart"
+                                data-name="Fellas Sticker Pack"
+                                data-price-cents="500"
+                                data-price-display="$5"
+                                onclick="addToCart(this)">Add to Cart</button>
                     </div>
                 </div>
             </div>
 
         </div>
     </section>
+
+    <!-- Floating cart bar -->
+    <button class="cart-bar" id="cart-bar" onclick="openCart()"></button>
+
+    <!-- Cart overlay -->
+    <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+
+    <!-- Cart drawer -->
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="cart-close" onclick="closeCart()">×</button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <span class="cart-total-amount" id="cart-total">$0.00</span>
+            </div>
+            <button class="btn-checkout" id="btn-checkout" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        const CART_KEY = 'fellas-cart';
+
+        function getCart() {
+            return JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        }
+
+        function addToCart(btn) {
+            const name = btn.dataset.name;
+            const priceCents = parseInt(btn.dataset.priceCents);
+            const priceDisplay = btn.dataset.priceDisplay;
+
+            const cart = getCart();
+            const existing = cart.find(i => i.name === name);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ name, priceCents, priceDisplay, quantity: 1 });
+            }
+            saveCart(cart);
+            updateCartUI();
+            openCart();
+        }
+
+        function updateQty(btn, delta) {
+            const name = btn.dataset.name;
+            const cart = getCart();
+            const item = cart.find(i => i.name === name);
+            if (!item) return;
+            item.quantity += delta;
+            if (item.quantity <= 0) cart.splice(cart.indexOf(item), 1);
+            saveCart(cart);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, i) => sum + i.quantity, 0);
+            const totalCents = cart.reduce((sum, i) => sum + i.priceCents * i.quantity, 0);
+
+            // Floating bar
+            const bar = document.getElementById('cart-bar');
+            if (totalItems > 0) {
+                bar.classList.add('visible');
+                bar.textContent = 'View Cart (' + totalItems + ') · $' + (totalCents / 100).toFixed(2);
+            } else {
+                bar.classList.remove('visible');
+            }
+
+            // Drawer items
+            const container = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="color:#555; text-align:center; padding:2rem 0;">Your cart is empty.</p>';
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">${item.priceDisplay}</div>
+                        </div>
+                        <div class="cart-item-qty">
+                            <button class="qty-btn" data-name="${item.name}" onclick="updateQty(this, -1)">−</button>
+                            <span class="qty-num">${item.quantity}</span>
+                            <button class="qty-btn" data-name="${item.name}" onclick="updateQty(this, 1)">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Total
+            document.getElementById('cart-total').textContent = '$' + (totalCents / 100).toFixed(2);
+
+            // Checkout button
+            document.getElementById('btn-checkout').disabled = cart.length === 0;
+        }
+
+        function openCart() {
+            document.getElementById('cart-drawer').classList.add('open');
+            document.getElementById('cart-overlay').classList.add('visible');
+        }
+
+        function closeCart() {
+            document.getElementById('cart-drawer').classList.remove('open');
+            document.getElementById('cart-overlay').classList.remove('visible');
+        }
+
+        async function checkout() {
+            const cart = getCart();
+            if (cart.length === 0) return;
+
+            const btn = document.getElementById('btn-checkout');
+            btn.disabled = true;
+            btn.textContent = 'Redirecting...';
+
+            const csrfToken = document.getElementById('csrf-token').value;
+            const csrfHeader = document.getElementById('csrf-header').value;
+
+            try {
+                const res = await fetch('/store/checkout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        [csrfHeader]: csrfToken
+                    },
+                    body: JSON.stringify(cart.map(i => ({
+                        productName: i.name,
+                        priceCents: i.priceCents,
+                        quantity: i.quantity
+                    })))
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.removeItem(CART_KEY);
+                    window.location.href = data.url;
+                } else {
+                    window.location.href = '/store?error=true';
+                }
+            } catch (e) {
+                window.location.href = '/store?error=true';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateCartUI);
+    </script>
 
 </div>
 </body>
