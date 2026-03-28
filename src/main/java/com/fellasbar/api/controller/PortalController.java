@@ -53,10 +53,11 @@ public class PortalController {
         BusinessUser user = currentUser(principal);
         Venue venue = user.getVenue();
         List<OperatingHours> hours = venueService.findOperatingHoursByVenueId(venue.getId());
+        List<Special> specials = venueService.findSpecialsByVenueId(venue.getId());
         model.addAttribute("user", user);
         model.addAttribute("venue", venue);
         model.addAttribute("hoursCount", hours.size());
-        model.addAttribute("specialsCount", venue.getSpecials().size());
+        model.addAttribute("specialsCount", specials.size());
         return "portal/dashboard";
     }
 
@@ -124,7 +125,7 @@ public class PortalController {
     public String specials(Model model, Principal principal) {
         Venue venue = currentUser(principal).getVenue();
         model.addAttribute("venue", venue);
-        model.addAttribute("specials", venue.getSpecials());
+        model.addAttribute("specials", venueService.findSpecialsByVenueId(venue.getId()));
         model.addAttribute("daysOfWeek", DAYS_OF_WEEK);
         return "portal/specials";
     }

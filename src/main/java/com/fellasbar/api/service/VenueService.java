@@ -117,6 +117,10 @@ public class VenueService {
         return specialRepository.findById(id);
     }
 
+    public List<Special> findSpecialsByVenueId(Long venueId) {
+        return specialRepository.findByVenueId(venueId);
+    }
+
     @Transactional
     public Special saveSpecial(Special special, String username) {
         boolean isNew = special.getId() == null;
