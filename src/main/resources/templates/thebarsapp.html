@@ -53,8 +53,8 @@
             </div>
 
             <div class="venue-request-form" id="venue-request">
-                <p th:if="${param.containsKey('request') and param.request[0] == 'sent'}" class="request-success">Your request was sent! We'll review it and be in touch.</p>
-                <p th:if="${param.containsKey('request') and param.request[0] == 'duplicate'}" class="request-error">An account with that email already exists. <a th:href="@{/portal/login}">Log in here.</a></p>
+                <p th:if="${param.request != null and param.request[0] == 'sent'}" class="request-success">Your request was sent! We'll review it and be in touch.</p>
+                <p th:if="${param.request != null and param.request[0] == 'duplicate'}" class="request-error">An account with that email already exists. <a th:href="@{/portal/login}">Log in here.</a></p>
 
                 <h3>Request access</h3>
                 <p>Fill out the form below and we'll set up your portal account.</p>
