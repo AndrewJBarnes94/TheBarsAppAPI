@@ -76,6 +76,8 @@ public class AdminController {
         Venue venue = venueService.findVenueById(id)
             .orElseThrow(() -> new IllegalArgumentException("Venue not found: " + id));
 
+        venue.setSpecials(venueService.findSpecialsByVenueId(id));
+
         List<OperatingHours> hours = venueService.findOperatingHoursByVenueId(id);
         Map<String, String> hoursMap = hours.stream()
             .collect(Collectors.toMap(OperatingHours::getDayOfWeek, OperatingHours::getHours,

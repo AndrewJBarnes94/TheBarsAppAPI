@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class StoreController {
@@ -30,6 +31,15 @@ public class StoreController {
     @Value("${app.base-url}")
     private String baseUrl;
 
+    @Value("${stripe.price.green-tee}")
+    private String greenTeePriceId;
+
+    @Value("${stripe.price.blue-tee}")
+    private String blueTeePriceId;
+
+    @Value("${stripe.price.white-tee}")
+    private String whiteTeePriceId;
+
     public StoreController(StripeService stripeService, OrderService orderService) {
         this.stripeService = stripeService;
         this.orderService = orderService;
@@ -38,6 +48,15 @@ public class StoreController {
     @PostMapping("/store/checkout")
     @ResponseBody
     public ResponseEntity<?> checkout(@RequestBody List<CartItem> items) {
+        Set<String> validPriceIds = Set.of(greenTeePriceId, blueTeePriceId, whiteTeePriceId);
+
+        boolean allValid = items != null && !items.isEmpty() &&
+            items.stream().allMatch(i -> validPriceIds.contains(i.priceId()) && i.quantity() > 0);
+
+        if (!allValid) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Invalid items"));
+        }
+
         try {
             String successUrl = baseUrl + "/store/success?session_id={CHECKOUT_SESSION_ID}";
             String cancelUrl = baseUrl + "/store";

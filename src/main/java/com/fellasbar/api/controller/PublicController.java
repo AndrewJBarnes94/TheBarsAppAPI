@@ -47,16 +47,6 @@ public class PublicController {
         return "thebarsapp";
     }
 
-    @GetMapping("/vlogs")
-    public String vlogs() {
-        return "vlogs";
-    }
-
-    @GetMapping("/blog")
-    public String blog() {
-        return "blog";
-    }
-
     @GetMapping("/store")
     public String store() {
         return "store";

@@ -18,7 +18,7 @@
                 <label for="type">Type</label>
                 <select id="type" name="type">
                     <option value="">— Select —</option>
-                    <option th:each="t : ${ {'Bar','Brewery','Restaurant','Pub','Winery','Sports Bar'} }"
+                    <option th:each="t : ${ {'Bar','Brewery','Restaurant','Pub','Winery','Sports Bar','Dog Bar'} }"
                             th:value="${t}" th:text="${t}" th:selected="${venue.type == t}"></option>
                 </select>
             </div>
@@ -115,16 +115,20 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Description</th>
                     <th>Day</th>
-                    <th>Original Price</th>
-                    <th>Special Price</th>
+                    <th>Time</th>
+                    <th>Original</th>
+                    <th>Special</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="special : ${venue.specials}">
                     <td th:text="${special.name}"></td>
+                    <td th:text="${special.description}"></td>
                     <td th:text="${special.dayOfWeek}"></td>
+                    <td th:text="${special.startTime != null ? special.startTime + ' – ' + special.endTime : '—'}"></td>
                     <td th:text="${special.originalPrice != null ? '$' + special.originalPrice : '—'}"></td>
                     <td th:text="${special.specialPrice != null ? '$' + special.specialPrice : '—'}"></td>
                     <td class="actions">

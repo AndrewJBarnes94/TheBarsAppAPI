@@ -37,17 +37,7 @@ public class StripeService {
             builder.addLineItem(
                 SessionCreateParams.LineItem.builder()
                     .setQuantity((long) item.quantity())
-                    .setPriceData(
-                        SessionCreateParams.LineItem.PriceData.builder()
-                            .setCurrency("usd")
-                            .setUnitAmount(item.priceCents())
-                            .setProductData(
-                                SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                    .setName(item.productName())
-                                    .build()
-                            )
-                            .build()
-                    )
+                    .setPrice(item.priceId())
                     .build()
             );
         }

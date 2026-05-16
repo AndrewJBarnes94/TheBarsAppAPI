@@ -22,31 +22,15 @@
         <div class="product-grid">
 
             <div class="product-card">
-                <div class="product-thumb"></div>
+                <img class="product-thumb" src="/Images/T-Shirt Green.png" alt="Green T-Shirt">
                 <div class="product-info">
-                    <h3>Fellas Heavyweight Tee</h3>
-                    <p class="product-desc">100% cotton, oversized fit. Black.</p>
-                    <div class="product-bottom">
-                        <span class="product-price">$35</span>
-                        <button class="btn-cart"
-                                data-name="Fellas Heavyweight Tee"
-                                data-price-cents="3500"
-                                data-price-display="$35"
-                                onclick="addToCart(this)">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-thumb"></div>
-                <div class="product-info">
-                    <h3>Fellas Snapback</h3>
-                    <p class="product-desc">6-panel structured cap. One size.</p>
+                    <h3>Green T-Shirt</h3>
+                    <p class="product-desc">Fellas logo tee. Green.</p>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
                         <button class="btn-cart"
-                                data-name="Fellas Snapback"
-                                data-price-cents="3000"
+                                data-price-id="price_1TXp3OC7BRhZ6tCETAR8iC0z"
+                                data-name="Green T-Shirt"
                                 data-price-display="$30"
                                 onclick="addToCart(this)">Add to Cart</button>
                     </div>
@@ -54,32 +38,32 @@
             </div>
 
             <div class="product-card">
-                <div class="product-thumb"></div>
+                <img class="product-thumb" src="/Images/T-Shirt Blue.png" alt="Blue T-Shirt">
                 <div class="product-info">
-                    <h3>Fellas Koozie</h3>
-                    <p class="product-desc">Neoprene can cooler. Fellas logo.</p>
+                    <h3>Blue T-Shirt</h3>
+                    <p class="product-desc">Fellas logo tee. Blue.</p>
                     <div class="product-bottom">
-                        <span class="product-price">$8</span>
+                        <span class="product-price">$30</span>
                         <button class="btn-cart"
-                                data-name="Fellas Koozie"
-                                data-price-cents="800"
-                                data-price-display="$8"
+                                data-price-id="price_1TXp2OC7BRhZ6tCEdlZJJFDf"
+                                data-name="Blue T-Shirt"
+                                data-price-display="$30"
                                 onclick="addToCart(this)">Add to Cart</button>
                     </div>
                 </div>
             </div>
 
             <div class="product-card">
-                <div class="product-thumb"></div>
+                <img class="product-thumb" src="/Images/T-Shirt White.png" alt="White T-Shirt">
                 <div class="product-info">
-                    <h3>Fellas Sticker Pack</h3>
-                    <p class="product-desc">5 die-cut stickers. Stick 'em everywhere.</p>
+                    <h3>White T-Shirt</h3>
+                    <p class="product-desc">Fellas logo tee. White.</p>
                     <div class="product-bottom">
-                        <span class="product-price">$5</span>
+                        <span class="product-price">$30</span>
                         <button class="btn-cart"
-                                data-name="Fellas Sticker Pack"
-                                data-price-cents="500"
-                                data-price-display="$5"
+                                data-price-id="price_1TXp1iC7BRhZ6tCETrTuF1mE"
+                                data-name="White T-Shirt"
+                                data-price-display="$30"
                                 onclick="addToCart(this)">Add to Cart</button>
                     </div>
                 </div>
@@ -122,16 +106,16 @@
         }
 
         function addToCart(btn) {
+            const priceId = btn.dataset.priceId;
             const name = btn.dataset.name;
-            const priceCents = parseInt(btn.dataset.priceCents);
             const priceDisplay = btn.dataset.priceDisplay;
 
             const cart = getCart();
-            const existing = cart.find(i => i.name === name);
+            const existing = cart.find(i => i.priceId === priceId);
             if (existing) {
                 existing.quantity++;
             } else {
-                cart.push({ name, priceCents, priceDisplay, quantity: 1 });
+                cart.push({ priceId, name, priceDisplay, quantity: 1 });
             }
             saveCart(cart);
             updateCartUI();
@@ -139,9 +123,9 @@
         }
 
         function updateQty(btn, delta) {
-            const name = btn.dataset.name;
+            const priceId = btn.dataset.priceId;
             const cart = getCart();
-            const item = cart.find(i => i.name === name);
+            const item = cart.find(i => i.priceId === priceId);
             if (!item) return;
             item.quantity += delta;
             if (item.quantity <= 0) cart.splice(cart.indexOf(item), 1);
@@ -152,13 +136,13 @@
         function updateCartUI() {
             const cart = getCart();
             const totalItems = cart.reduce((sum, i) => sum + i.quantity, 0);
-            const totalCents = cart.reduce((sum, i) => sum + i.priceCents * i.quantity, 0);
+            const totalDollars = cart.reduce((sum, i) => sum + 30 * i.quantity, 0);
 
             // Floating bar
             const bar = document.getElementById('cart-bar');
             if (totalItems > 0) {
                 bar.classList.add('visible');
-                bar.textContent = 'View Cart (' + totalItems + ') · $' + (totalCents / 100).toFixed(2);
+                bar.textContent = 'View Cart (' + totalItems + ') · $' + totalDollars.toFixed(2);
             } else {
                 bar.classList.remove('visible');
             }
@@ -175,16 +159,16 @@
                             <div class="cart-item-price">${item.priceDisplay}</div>
                         </div>
                         <div class="cart-item-qty">
-                            <button class="qty-btn" data-name="${item.name}" onclick="updateQty(this, -1)">−</button>
+                            <button class="qty-btn" data-price-id="${item.priceId}" onclick="updateQty(this, -1)">−</button>
                             <span class="qty-num">${item.quantity}</span>
-                            <button class="qty-btn" data-name="${item.name}" onclick="updateQty(this, 1)">+</button>
+                            <button class="qty-btn" data-price-id="${item.priceId}" onclick="updateQty(this, 1)">+</button>
                         </div>
                     </div>
                 `).join('');
             }
 
             // Total
-            document.getElementById('cart-total').textContent = '$' + (totalCents / 100).toFixed(2);
+            document.getElementById('cart-total').textContent = '$' + totalDollars.toFixed(2);
 
             // Checkout button
             document.getElementById('btn-checkout').disabled = cart.length === 0;
@@ -219,8 +203,7 @@
                         [csrfHeader]: csrfToken
                     },
                     body: JSON.stringify(cart.map(i => ({
-                        productName: i.name,
-                        priceCents: i.priceCents,
+                        priceId: i.priceId,
                         quantity: i.quantity
                     })))
                 });
