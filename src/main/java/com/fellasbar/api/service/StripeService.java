@@ -30,6 +30,7 @@ public class StripeService {
 
         if (customerEmail != null) {
             builder.setCustomerEmail(customerEmail);
+            builder.putMetadata("accountEmail", customerEmail);
         }
 
         builder.setShippingAddressCollection(

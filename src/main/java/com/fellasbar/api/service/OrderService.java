@@ -41,9 +41,9 @@ public class OrderService {
 
             Order order = new Order();
             order.setStripeSessionId(sessionId);
-            order.setCustomerEmail(
-                session.getCustomerDetails() != null ? session.getCustomerDetails().getEmail() : null
-            );
+            String accountEmail = session.getMetadata() != null ? session.getMetadata().get("accountEmail") : null;
+            String stripeEmail = session.getCustomerDetails() != null ? session.getCustomerDetails().getEmail() : null;
+            order.setCustomerEmail(accountEmail != null ? accountEmail : stripeEmail);
             order.setTotalCents(session.getAmountTotal());
             order.setLineItems(lineItemsText);
 
