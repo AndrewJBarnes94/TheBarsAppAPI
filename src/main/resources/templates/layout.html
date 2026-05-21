@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,10 @@
     <div class="site-nav-links">
         <a th:href="@{/store}">Store</a>
         <a th:href="@{/thebarsapp}" class="nav-app-pill">The Bars App ↗</a>
+        <span class="nav-divider" sec:authorize="hasRole('CUSTOMER')"></span>
+        <a th:href="@{/store/orders}" sec:authorize="hasRole('CUSTOMER')">My Orders</a>
+        <a th:href="@{/store/logout}" sec:authorize="hasRole('CUSTOMER')" class="nav-signout">Sign Out</a>
+        <a th:href="@{/store/login}" sec:authorize="!hasRole('CUSTOMER')" class="nav-signin">Sign In</a>
     </div>
 </nav>
 

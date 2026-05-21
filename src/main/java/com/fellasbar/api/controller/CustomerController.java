@@ -2,6 +2,8 @@ package com.fellasbar.api.controller;
 
 import com.fellasbar.api.model.Customer;
 import com.fellasbar.api.repository.CustomerRepository;
+import com.fellasbar.api.repository.OrderRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +15,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CustomerController {
 
     private final CustomerRepository customerRepository;
+    private final OrderRepository orderRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public CustomerController(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
+    public CustomerController(CustomerRepository customerRepository,
+                               OrderRepository orderRepository,
+                               PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
+        this.orderRepository = orderRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @GetMapping("/store/orders")
+    public String orders(Authentication auth, Model model) {
+        model.addAttribute("orders", orderRepository.findAllByCustomerEmailOrderByCreatedAtDesc(auth.getName()));
+        return "store-orders";
     }
 
     @GetMapping("/store/login")

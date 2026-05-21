@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<body>
+<div th:fragment="content">
+
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <p class="eyebrow">Fellas · Store</p>
+            <h1>My Orders</h1>
+        </div>
+    </section>
+
+    <section class="content-section tiki-bg">
+        <div class="orders-container">
+
+            <div th:if="${orders.empty}" class="orders-empty">
+                <p>No orders yet. <a th:href="@{/store}">Head to the store.</a></p>
+            </div>
+
+            <div th:each="order : ${orders}" class="order-card">
+                <div class="order-card-header">
+                    <div>
+                        <span class="order-status">Paid</span>
+                        <span class="order-date" th:text="${#temporals.format(order.createdAt, 'MMM d, yyyy')}"></span>
+                    </div>
+                    <span class="order-total" th:text="'$' + ${#numbers.formatDecimal(order.totalCents / 100.0, 1, 2)}"></span>
+                </div>
+                <pre class="order-items" th:text="${order.lineItems}"></pre>
+                <div class="order-shipping" th:if="${order.shippingName != null}">
+                    <span class="order-shipping-label">Ships to</span>
+                    <span th:text="${order.shippingName}"></span> —
+                    <span th:text="${order.shippingLine1}"></span>
+                    <span th:if="${order.shippingLine2 != null}" th:text="', ' + ${order.shippingLine2}"></span>,
+                    <span th:text="${order.shippingCity}"></span>,
+                    <span th:text="${order.shippingState}"></span>
+                    <span th:text="${order.shippingPostalCode}"></span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

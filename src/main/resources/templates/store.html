@@ -169,11 +169,11 @@
 
             // Floating bar
             const bar = document.getElementById('cart-bar');
+            bar.classList.add('visible');
             if (totalItems > 0) {
-                bar.classList.add('visible');
                 bar.textContent = 'View Cart (' + totalItems + ') · $' + totalDollars.toFixed(2);
             } else {
-                bar.classList.remove('visible');
+                bar.textContent = 'View Cart';
             }
 
             // Drawer items
