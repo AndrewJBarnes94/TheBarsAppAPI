@@ -22,12 +22,17 @@ public class StripeService {
         Stripe.apiKey = secretKey;
     }
 
-    public String createCheckoutSession(List<CartItem> items, String successUrl, String cancelUrl) throws StripeException {
+    public String createCheckoutSession(List<CartItem> items, String successUrl, String cancelUrl, String customerEmail) throws StripeException {
         SessionCreateParams.Builder builder = SessionCreateParams.builder()
             .setMode(SessionCreateParams.Mode.PAYMENT)
             .setSuccessUrl(successUrl)
-            .setCancelUrl(cancelUrl)
-            .setShippingAddressCollection(
+            .setCancelUrl(cancelUrl);
+
+        if (customerEmail != null) {
+            builder.setCustomerEmail(customerEmail);
+        }
+
+        builder.setShippingAddressCollection(
                 SessionCreateParams.ShippingAddressCollection.builder()
                     .addAllowedCountry(SessionCreateParams.ShippingAddressCollection.AllowedCountry.US)
                     .build()

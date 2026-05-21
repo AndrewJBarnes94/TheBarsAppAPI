@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<body>
+<div th:fragment="content">
+
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <p class="eyebrow">Fellas · Store</p>
+            <h1>Sign In</h1>
+            <p>Sign in to complete your purchase.</p>
+        </div>
+    </section>
+
+    <section class="content-section tiki-bg">
+        <div class="auth-card">
+            <div th:if="${error}" class="store-notice" style="background:#2a0a0a; border-color:#c0392b; color:#e74c3c;">
+                <span th:text="${error}"></span>
+            </div>
+            <div th:if="${message}" class="store-notice" style="background:#0a2a0a; border-color:#27ae60; color:#2ecc71;">
+                <span th:text="${message}"></span>
+            </div>
+            <div th:if="${param.registered}" class="store-notice" style="background:#0a2a0a; border-color:#27ae60; color:#2ecc71;">
+                Account created! Sign in below.
+            </div>
+
+            <form th:action="@{/store/login}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <div class="auth-field">
+                    <label for="username">Email</label>
+                    <input type="email" id="username" name="username" placeholder="you@example.com" required autocomplete="email"/>
+                </div>
+                <div class="auth-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Password" required autocomplete="current-password"/>
+                </div>
+                <button type="submit" class="btn-primary-full">Sign In</button>
+            </form>
+
+            <p class="auth-switch">Don't have an account? <a th:href="@{/store/register}">Create one</a></p>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

@@ -26,10 +26,15 @@
                 <div class="product-info">
                     <h3>Green T-Shirt</h3>
                     <p class="product-desc">Fellas logo tee. Green.</p>
+                    <div class="size-selector">
+                        <button class="size-btn" data-price-id="price_1TYlChC7BRhZ6tCEoCbbPUtv" onclick="selectSize(this)">S</button>
+                        <button class="size-btn" data-price-id="price_1TYl8NC7BRhZ6tCE4YbYNkVp" onclick="selectSize(this)">M</button>
+                        <button class="size-btn" data-price-id="price_1TYlA8C7BRhZ6tCEiFLLTUOl" onclick="selectSize(this)">L</button>
+                        <button class="size-btn" data-price-id="price_1TYlBDC7BRhZ6tCEVlUzvvMr" onclick="selectSize(this)">XL</button>
+                    </div>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
                         <button class="btn-cart"
-                                data-price-id="price_1TXp3OC7BRhZ6tCETAR8iC0z"
                                 data-name="Green T-Shirt"
                                 data-price-display="$30"
                                 onclick="addToCart(this)">Add to Cart</button>
@@ -42,10 +47,15 @@
                 <div class="product-info">
                     <h3>Blue T-Shirt</h3>
                     <p class="product-desc">Fellas logo tee. Blue.</p>
+                    <div class="size-selector">
+                        <button class="size-btn" data-price-id="price_1TYlCIC7BRhZ6tCELDj69H5l" onclick="selectSize(this)">S</button>
+                        <button class="size-btn" data-price-id="price_1TYl7xC7BRhZ6tCEEOQv7kX2" onclick="selectSize(this)">M</button>
+                        <button class="size-btn" data-price-id="price_1TYlANC7BRhZ6tCE9wfD19f1" onclick="selectSize(this)">L</button>
+                        <button class="size-btn" data-price-id="price_1TYlAyC7BRhZ6tCE58F2FcIx" onclick="selectSize(this)">XL</button>
+                    </div>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
                         <button class="btn-cart"
-                                data-price-id="price_1TXp2OC7BRhZ6tCEdlZJJFDf"
                                 data-name="Blue T-Shirt"
                                 data-price-display="$30"
                                 onclick="addToCart(this)">Add to Cart</button>
@@ -58,10 +68,15 @@
                 <div class="product-info">
                     <h3>White T-Shirt</h3>
                     <p class="product-desc">Fellas logo tee. White.</p>
+                    <div class="size-selector">
+                        <button class="size-btn" data-price-id="price_1TYlC5C7BRhZ6tCEkSoYQKDB" onclick="selectSize(this)">S</button>
+                        <button class="size-btn" data-price-id="price_1TYl7cC7BRhZ6tCEbk6Dopj7" onclick="selectSize(this)">M</button>
+                        <button class="size-btn" data-price-id="price_1TYl9rC7BRhZ6tCEVB2gvNdp" onclick="selectSize(this)">L</button>
+                        <button class="size-btn" data-price-id="price_1TYlAlC7BRhZ6tCEHE2aFOpo" onclick="selectSize(this)">XL</button>
+                    </div>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
                         <button class="btn-cart"
-                                data-price-id="price_1TXp1iC7BRhZ6tCETrTuF1mE"
                                 data-name="White T-Shirt"
                                 data-price-display="$30"
                                 onclick="addToCart(this)">Add to Cart</button>
@@ -105,17 +120,31 @@
             localStorage.setItem(CART_KEY, JSON.stringify(cart));
         }
 
+        function selectSize(btn) {
+            btn.closest('.size-selector').querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
         function addToCart(btn) {
-            const priceId = btn.dataset.priceId;
             const name = btn.dataset.name;
             const priceDisplay = btn.dataset.priceDisplay;
+            const activeSize = btn.closest('.product-info').querySelector('.size-btn.active');
 
+            if (!activeSize) {
+                const orig = btn.textContent;
+                btn.textContent = 'Pick a size first';
+                setTimeout(() => btn.textContent = orig, 1500);
+                return;
+            }
+
+            const priceId = activeSize.dataset.priceId;
+            const size = activeSize.textContent;
             const cart = getCart();
             const existing = cart.find(i => i.priceId === priceId);
             if (existing) {
                 existing.quantity++;
             } else {
-                cart.push({ priceId, name, priceDisplay, quantity: 1 });
+                cart.push({ priceId, name, size, priceDisplay, quantity: 1 });
             }
             saveCart(cart);
             updateCartUI();
@@ -155,7 +184,7 @@
                 container.innerHTML = cart.map(item => `
                     <div class="cart-item">
                         <div class="cart-item-info">
-                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-name">${item.name} — ${item.size}</div>
                             <div class="cart-item-price">${item.priceDisplay}</div>
                         </div>
                         <div class="cart-item-qty">
@@ -190,13 +219,13 @@
 
             const btn = document.getElementById('btn-checkout');
             btn.disabled = true;
-            btn.textContent = 'Redirecting...';
+            btn.textContent = 'Signing in...';
 
             const csrfToken = document.getElementById('csrf-token').value;
             const csrfHeader = document.getElementById('csrf-header').value;
 
             try {
-                const res = await fetch('/store/checkout', {
+                const res = await fetch('/store/save-cart', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -209,9 +238,8 @@
                 });
 
                 if (res.ok) {
-                    const data = await res.json();
                     localStorage.removeItem(CART_KEY);
-                    window.location.href = data.url;
+                    window.location.href = '/store/initiate-checkout';
                 } else {
                     window.location.href = '/store?error=true';
                 }

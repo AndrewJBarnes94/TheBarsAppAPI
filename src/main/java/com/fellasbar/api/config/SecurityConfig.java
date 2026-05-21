@@ -1,6 +1,7 @@
 package com.fellasbar.api.config;
 
 import com.fellasbar.api.service.BusinessUserDetailsService;
+import com.fellasbar.api.service.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -78,6 +79,31 @@ public class SecurityConfig {
 
     @Bean
     @Order(3)
+    public SecurityFilterChain storeFilterChain(HttpSecurity http,
+                                                 CustomerUserDetailsService customerUserDetailsService) throws Exception {
+        http
+            .securityMatcher("/store/**")
+            .userDetailsService(customerUserDetailsService)
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/store", "/store/success", "/store/save-cart",
+                    "/store/login", "/store/register").permitAll()
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/store/login")
+                .defaultSuccessUrl("/store/initiate-checkout", true)
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/store/logout")
+                .logoutSuccessUrl("/store/login?logout")
+                .permitAll()
+            );
+        return http.build();
+    }
+
+    @Bean
+    @Order(4)
     public SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
         var manager = new InMemoryUserDetailsManager(
             User.builder().username(adminUsername).password(passwordEncoder().encode(adminPassword)).roles("ADMIN").build(),

@@ -6,13 +6,16 @@ import com.fellasbar.api.service.StripeService;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.Event;
 import com.stripe.net.Webhook;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,25 +34,18 @@ public class StoreController {
     @Value("${app.base-url}")
     private String baseUrl;
 
-    @Value("${stripe.price.green-tee}")
-    private String greenTeePriceId;
-
-    @Value("${stripe.price.blue-tee}")
-    private String blueTeePriceId;
-
-    @Value("${stripe.price.white-tee}")
-    private String whiteTeePriceId;
+    @Value("#{'${stripe.valid-price-ids}'.split(',')}")
+    private List<String> validPriceIdList;
 
     public StoreController(StripeService stripeService, OrderService orderService) {
         this.stripeService = stripeService;
         this.orderService = orderService;
     }
 
-    @PostMapping("/store/checkout")
+    @PostMapping("/store/save-cart")
     @ResponseBody
-    public ResponseEntity<?> checkout(@RequestBody List<CartItem> items) {
-        Set<String> validPriceIds = Set.of(greenTeePriceId, blueTeePriceId, whiteTeePriceId);
-
+    public ResponseEntity<?> saveCart(@RequestBody List<CartItem> items, HttpSession session) {
+        Set<String> validPriceIds = new HashSet<>(validPriceIdList);
         boolean allValid = items != null && !items.isEmpty() &&
             items.stream().allMatch(i -> validPriceIds.contains(i.priceId()) && i.quantity() > 0);
 
@@ -57,14 +53,36 @@ public class StoreController {
             return ResponseEntity.badRequest().body(Map.of("error", "Invalid items"));
         }
 
+        session.setAttribute("pendingCart", items);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/store/initiate-checkout")
+    public String initiateCheckout(HttpSession session, Authentication principal) {
+        @SuppressWarnings("unchecked")
+        List<CartItem> items = (List<CartItem>) session.getAttribute("pendingCart");
+
+        if (items == null || items.isEmpty()) {
+            return "redirect:/store";
+        }
+
+        Set<String> validPriceIds = new HashSet<>(validPriceIdList);
+        boolean allValid = items.stream().allMatch(i -> validPriceIds.contains(i.priceId()) && i.quantity() > 0);
+        if (!allValid) {
+            session.removeAttribute("pendingCart");
+            return "redirect:/store?error=true";
+        }
+
         try {
+            String email = principal != null ? principal.getName() : null;
             String successUrl = baseUrl + "/store/success?session_id={CHECKOUT_SESSION_ID}";
             String cancelUrl = baseUrl + "/store";
-            String checkoutUrl = stripeService.createCheckoutSession(items, successUrl, cancelUrl);
-            return ResponseEntity.ok(Map.of("url", checkoutUrl));
+            String checkoutUrl = stripeService.createCheckoutSession(items, successUrl, cancelUrl, email);
+            session.removeAttribute("pendingCart");
+            return "redirect:" + checkoutUrl;
         } catch (Exception e) {
             log.error("Stripe checkout error: {}", e.getMessage());
-            return ResponseEntity.internalServerError().body(Map.of("error", "Checkout failed"));
+            return "redirect:/store?error=true";
         }
     }
 
