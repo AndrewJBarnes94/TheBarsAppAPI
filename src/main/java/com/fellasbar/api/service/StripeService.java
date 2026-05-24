@@ -39,6 +39,23 @@ public class StripeService {
                     .build()
             );
 
+        builder.addShippingOption(
+                SessionCreateParams.ShippingOption.builder()
+                    .setShippingRateData(
+                        SessionCreateParams.ShippingOption.ShippingRateData.builder()
+                            .setDisplayName("Standard Shipping")
+                            .setType(SessionCreateParams.ShippingOption.ShippingRateData.Type.FIXED_AMOUNT)
+                            .setFixedAmount(
+                                SessionCreateParams.ShippingOption.ShippingRateData.FixedAmount.builder()
+                                    .setAmount(500L)
+                                    .setCurrency("usd")
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .build()
+            );
+
         for (CartItem item : items) {
             builder.addLineItem(
                 SessionCreateParams.LineItem.builder()
