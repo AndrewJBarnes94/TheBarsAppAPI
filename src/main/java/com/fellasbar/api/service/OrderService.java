@@ -16,9 +16,11 @@ public class OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderRepository orderRepository;
+    private final EmailService emailService;
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, EmailService emailService) {
         this.orderRepository = orderRepository;
+        this.emailService = emailService;
     }
 
     public void fulfill(String sessionId) {
@@ -64,6 +66,9 @@ public class OrderService {
             orderRepository.save(order);
             log.info("Order saved — session={} customer={} shipping={}",
                 sessionId, order.getCustomerEmail(), order.getShippingLine1());
+
+            emailService.sendOrderConfirmation(order);
+            emailService.sendOrderNotification(order);
 
         } catch (Exception e) {
             log.error("Failed to fulfill order for session {}: {}", sessionId, e.getMessage(), e);
