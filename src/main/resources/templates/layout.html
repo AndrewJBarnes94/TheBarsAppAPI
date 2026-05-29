@@ -19,7 +19,10 @@
         <a th:href="@{/thebarsapp}" class="nav-app-pill">The Bars App ↗</a>
         <span class="nav-divider" sec:authorize="hasRole('CUSTOMER')"></span>
         <a th:href="@{/store/orders}" sec:authorize="hasRole('CUSTOMER')">My Orders</a>
-        <a th:href="@{/store/logout}" sec:authorize="hasRole('CUSTOMER')" class="nav-signout">Sign Out</a>
+        <form th:action="@{/store/logout}" method="post" sec:authorize="hasRole('CUSTOMER')" style="display:inline;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <button type="submit" class="nav-signout">Sign Out</button>
+        </form>
         <a th:href="@{/store/login}" sec:authorize="!hasRole('CUSTOMER')" class="nav-signin">Sign In</a>
     </div>
 </nav>
