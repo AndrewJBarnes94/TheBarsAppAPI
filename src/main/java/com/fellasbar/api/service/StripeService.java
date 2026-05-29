@@ -33,6 +33,12 @@ public class StripeService {
             builder.putMetadata("accountEmail", customerEmail);
         }
 
+        builder.setPhoneNumberCollection(
+                SessionCreateParams.PhoneNumberCollection.builder()
+                    .setEnabled(true)
+                    .build()
+            );
+
         builder.setShippingAddressCollection(
                 SessionCreateParams.ShippingAddressCollection.builder()
                     .addAllowedCountry(SessionCreateParams.ShippingAddressCollection.AllowedCountry.US)
@@ -67,5 +73,10 @@ public class StripeService {
 
         Session session = Session.create(builder.build());
         return session.getUrl();
+    }
+
+    public String getCustomerEmail(String sessionId) throws StripeException {
+        Session session = Session.retrieve(sessionId);
+        return session.getCustomerDetails() != null ? session.getCustomerDetails().getEmail() : null;
     }
 }

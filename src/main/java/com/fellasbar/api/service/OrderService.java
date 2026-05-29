@@ -1,6 +1,8 @@
 package com.fellasbar.api.service;
 
+import com.fellasbar.api.model.Customer;
 import com.fellasbar.api.model.Order;
+import com.fellasbar.api.repository.CustomerRepository;
 import com.fellasbar.api.repository.OrderRepository;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionListLineItemsParams;
@@ -16,10 +18,14 @@ public class OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
     private final EmailService emailService;
 
-    public OrderService(OrderRepository orderRepository, EmailService emailService) {
+    public OrderService(OrderRepository orderRepository,
+                        CustomerRepository customerRepository,
+                        EmailService emailService) {
         this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
         this.emailService = emailService;
     }
 
@@ -45,7 +51,9 @@ public class OrderService {
             order.setStripeSessionId(sessionId);
             String accountEmail = session.getMetadata() != null ? session.getMetadata().get("accountEmail") : null;
             String stripeEmail = session.getCustomerDetails() != null ? session.getCustomerDetails().getEmail() : null;
+            String stripePhone = session.getCustomerDetails() != null ? session.getCustomerDetails().getPhone() : null;
             order.setCustomerEmail(accountEmail != null ? accountEmail : stripeEmail);
+            order.setCustomerPhone(stripePhone);
             order.setTotalCents(session.getAmountTotal());
             order.setLineItems(lineItemsText);
 
@@ -67,11 +75,31 @@ public class OrderService {
             log.info("Order saved — session={} customer={} shipping={}",
                 sessionId, order.getCustomerEmail(), order.getShippingLine1());
 
+            upsertCustomer(order);
+
             emailService.sendOrderConfirmation(order);
             emailService.sendOrderNotification(order);
 
         } catch (Exception e) {
             log.error("Failed to fulfill order for session {}: {}", sessionId, e.getMessage(), e);
         }
+    }
+
+    private void upsertCustomer(Order order) {
+        if (order.getCustomerEmail() == null) return;
+        customerRepository.findByEmail(order.getCustomerEmail()).ifPresentOrElse(
+            existing -> {
+                if (existing.getName() == null) existing.setName(order.getShippingName());
+                if (existing.getPhone() == null) existing.setPhone(order.getCustomerPhone());
+                customerRepository.save(existing);
+            },
+            () -> {
+                Customer guest = new Customer();
+                guest.setEmail(order.getCustomerEmail());
+                guest.setName(order.getShippingName());
+                guest.setPhone(order.getCustomerPhone());
+                customerRepository.save(guest);
+            }
+        );
     }
 }

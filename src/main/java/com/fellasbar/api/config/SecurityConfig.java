@@ -18,6 +18,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Value("${fellasbar.rememberme.key}")
+    private String rememberMeKey;
+
     @Value("${fellasbar.admin.username}")
     private String adminUsername;
 
@@ -86,13 +89,20 @@ public class SecurityConfig {
             .userDetailsService(customerUserDetailsService)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/store", "/store/success", "/store/save-cart",
-                    "/store/login", "/store/register").permitAll()
+                    "/store/login", "/store/register",
+                    "/store/initiate-checkout", "/store/set-password",
+                    "/store/forgot-password", "/store/reset-password").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/store/login")
                 .defaultSuccessUrl("/store/initiate-checkout", true)
                 .permitAll()
+            )
+            .rememberMe(rm -> rm
+                .key(rememberMeKey)
+                .tokenValiditySeconds(7 * 24 * 60 * 60)
+                .userDetailsService(customerUserDetailsService)
             )
             .logout(logout -> logout
                 .logoutUrl("/store/logout")

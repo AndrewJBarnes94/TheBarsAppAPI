@@ -15,6 +15,7 @@ public class Order {
     private String stripeSessionId;
 
     private String customerEmail;
+    private String customerPhone;
 
     private long totalCents;
 
@@ -48,6 +49,8 @@ public class Order {
     public void setStripeSessionId(String stripeSessionId) { this.stripeSessionId = stripeSessionId; }
     public String getCustomerEmail() { return customerEmail; }
     public void setCustomerEmail(String customerEmail) { this.customerEmail = customerEmail; }
+    public String getCustomerPhone() { return customerPhone; }
+    public void setCustomerPhone(String customerPhone) { this.customerPhone = customerPhone; }
     public long getTotalCents() { return totalCents; }
     public void setTotalCents(long totalCents) { this.totalCents = totalCents; }
     public String getLineItems() { return lineItems; }

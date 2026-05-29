@@ -24,6 +24,9 @@ public class CustomerUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Customer customer = customerRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("No account found for " + email));
+        if (!customer.hasPassword()) {
+            throw new UsernameNotFoundException("No password set for " + email);
+        }
         return new User(customer.getEmail(), customer.getPasswordHash(),
             List.of(new SimpleGrantedAuthority("ROLE_CUSTOMER")));
     }

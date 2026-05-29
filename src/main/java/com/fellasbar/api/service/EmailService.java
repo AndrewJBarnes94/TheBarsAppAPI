@@ -41,6 +41,17 @@ public class EmailService {
             "Order Confirmed — Fellas", buildConfirmationBody(order));
     }
 
+    public void sendPasswordReset(String toEmail, String resetUrl) {
+        String html = "<!DOCTYPE html><html><body style='margin:0;padding:0;background:#111;'>" +
+            "<div style='font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:480px;margin:0 auto;padding:40px 24px;'>" +
+            "<h1 style='color:#c9a227;font-size:28px;margin:0 0 12px;'>Reset your password</h1>" +
+            "<p style='color:#888;font-size:15px;margin:0 0 28px;'>Click the button below to set a new password. This link expires in 1 hour.</p>" +
+            "<a href='" + resetUrl + "' style='display:inline-block;background:#c9a227;color:#111;font-weight:700;font-size:15px;padding:14px 28px;border-radius:6px;text-decoration:none;'>Reset Password</a>" +
+            "<p style='color:#555;font-size:13px;margin-top:28px;'>If you didn't request this, you can ignore this email.</p>" +
+            "</div></body></html>";
+        send(fromEmail, "Fellas", toEmail, "Reset your password — Fellas", html);
+    }
+
     public void sendOrderNotification(Order order) {
         send(fromEmail, "Fellas Store", storeNotifyEmail,
             "New Order — $" + String.format("%.2f", order.getTotalCents() / 100.0),

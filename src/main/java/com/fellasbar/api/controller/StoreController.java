@@ -1,6 +1,8 @@
 package com.fellasbar.api.controller;
 
 import com.fellasbar.api.dto.CartItem;
+import com.fellasbar.api.model.Customer;
+import com.fellasbar.api.repository.CustomerRepository;
 import com.fellasbar.api.service.OrderService;
 import com.fellasbar.api.service.StripeService;
 import com.stripe.exception.SignatureVerificationException;
@@ -12,7 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -27,6 +31,8 @@ public class StoreController {
 
     private final StripeService stripeService;
     private final OrderService orderService;
+    private final CustomerRepository customerRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${stripe.webhook-secret}")
     private String webhookSecret;
@@ -37,9 +43,12 @@ public class StoreController {
     @Value("#{'${stripe.valid-price-ids}'.split(',')}")
     private List<String> validPriceIdList;
 
-    public StoreController(StripeService stripeService, OrderService orderService) {
+    public StoreController(StripeService stripeService, OrderService orderService,
+                           CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
         this.stripeService = stripeService;
         this.orderService = orderService;
+        this.customerRepository = customerRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/store/save-cart")
@@ -87,8 +96,43 @@ public class StoreController {
     }
 
     @GetMapping("/store/success")
-    public String success() {
+    public String success(@RequestParam(name = "session_id", required = false) String sessionId,
+                          Authentication principal, Model model) {
+        if (principal == null && sessionId != null) {
+            try {
+                String email = stripeService.getCustomerEmail(sessionId);
+                model.addAttribute("guestEmail", email);
+            } catch (Exception e) {
+                log.warn("Could not retrieve email for session {}", sessionId);
+            }
+        }
         return "store-success";
+    }
+
+    @PostMapping("/store/set-password")
+    public String setPassword(@RequestParam String email,
+                              @RequestParam String password,
+                              @RequestParam String confirmPassword,
+                              Model model) {
+        final String normalizedEmail = email.trim().toLowerCase();
+        if (!password.equals(confirmPassword)) {
+            model.addAttribute("guestEmail", normalizedEmail);
+            model.addAttribute("passwordError", "Passwords do not match.");
+            return "store-success";
+        }
+        if (password.length() < 8) {
+            model.addAttribute("guestEmail", normalizedEmail);
+            model.addAttribute("passwordError", "Password must be at least 8 characters.");
+            return "store-success";
+        }
+        Customer customer = customerRepository.findByEmail(normalizedEmail).orElseGet(() -> {
+            Customer c = new Customer();
+            c.setEmail(normalizedEmail);
+            return c;
+        });
+        customer.setPasswordHash(passwordEncoder.encode(password));
+        customerRepository.save(customer);
+        return "redirect:/store/login?registered";
     }
 
     @PostMapping("/webhooks/stripe")
