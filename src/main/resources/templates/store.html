@@ -223,12 +223,18 @@
             document.getElementById('cart-overlay').classList.remove('visible');
         }
 
+        const IS_AUTHENTICATED = /*[[${isAuthenticated}]]*/ false;
+
         function checkout() {
             const cart = getCart();
             if (cart.length === 0) return;
             closeCart();
-            document.getElementById('checkout-modal').style.display = 'block';
-            document.getElementById('checkout-modal-overlay').classList.add('visible');
+            if (IS_AUTHENTICATED) {
+                proceedToCheckout('/store/initiate-checkout');
+            } else {
+                document.getElementById('checkout-modal').style.display = 'block';
+                document.getElementById('checkout-modal-overlay').classList.add('visible');
+            }
         }
 
         function closeCheckoutModal() {

@@ -2,7 +2,9 @@ package com.fellasbar.api.controller;
 
 import com.fellasbar.api.model.BusinessUser;
 import com.fellasbar.api.repository.BusinessUserRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,7 +50,8 @@ public class PublicController {
     }
 
     @GetMapping("/store")
-    public String store() {
+    public String store(Authentication principal, Model model) {
+        model.addAttribute("isAuthenticated", principal != null);
         return "store";
     }
 }
