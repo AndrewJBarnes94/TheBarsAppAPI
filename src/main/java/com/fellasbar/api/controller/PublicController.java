@@ -2,6 +2,7 @@ package com.fellasbar.api.controller;
 
 import com.fellasbar.api.model.BusinessUser;
 import com.fellasbar.api.repository.BusinessUserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class PublicController {
 
     private final BusinessUserRepository businessUserRepository;
+
+    @Value("#{'${stripe.valid-price-ids}'.split(',')}")
+    private List<String> priceIds;
 
     public PublicController(BusinessUserRepository businessUserRepository) {
         this.businessUserRepository = businessUserRepository;
@@ -52,6 +58,7 @@ public class PublicController {
     @GetMapping("/store")
     public String store(Authentication principal, Model model) {
         model.addAttribute("isAuthenticated", principal != null);
+        model.addAttribute("priceIds", priceIds);
         return "store";
     }
 }
