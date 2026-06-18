@@ -9,6 +9,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -84,9 +86,25 @@ public class SecurityConfig {
     @Order(3)
     public SecurityFilterChain storeFilterChain(HttpSecurity http,
                                                  CustomerUserDetailsService customerUserDetailsService) throws Exception {
+        InMemoryUserDetailsManager fellaManager = new InMemoryUserDetailsManager(
+            User.builder().username("aj").password(passwordEncoder().encode(ajPassword)).roles("USER").build(),
+            User.builder().username("bill").password(passwordEncoder().encode(billPassword)).roles("USER").build(),
+            User.builder().username("dom").password(passwordEncoder().encode(domPassword)).roles("USER").build(),
+            User.builder().username("seth").password(passwordEncoder().encode(sethPassword)).roles("USER").build(),
+            User.builder().username("trevor").password(passwordEncoder().encode(trevorPassword)).roles("USER").build(),
+            User.builder().username("jared").password(passwordEncoder().encode(jaredPassword)).roles("USER").build()
+        );
+        UserDetailsService storeUserDetailsService = username -> {
+            try {
+                return customerUserDetailsService.loadUserByUsername(username);
+            } catch (UsernameNotFoundException e) {
+                return fellaManager.loadUserByUsername(username);
+            }
+        };
+
         http
             .securityMatcher("/store/**")
-            .userDetailsService(customerUserDetailsService)
+            .userDetailsService(storeUserDetailsService)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/store", "/store/success", "/store/save-cart",
                     "/store/login", "/store/register",
@@ -102,7 +120,7 @@ public class SecurityConfig {
             .rememberMe(rm -> rm
                 .key(rememberMeKey)
                 .tokenValiditySeconds(7 * 24 * 60 * 60)
-                .userDetailsService(customerUserDetailsService)
+                .userDetailsService(storeUserDetailsService)
             )
             .logout(logout -> logout
                 .logoutUrl("/store/logout")
