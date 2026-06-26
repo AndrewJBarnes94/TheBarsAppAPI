@@ -30,7 +30,7 @@
                         <button class="size-btn" th:attr="data-price-id=${priceIds[0]}" onclick="selectSize(this)">S</button>
                         <button class="size-btn" th:attr="data-price-id=${priceIds[1]}" onclick="selectSize(this)">M</button>
                         <button class="size-btn" th:attr="data-price-id=${priceIds[2]}" onclick="selectSize(this)">L</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[3]}" onclick="selectSize(this)">XL</button>
+                        <button class="size-btn sold-out" th:attr="data-price-id=${priceIds[3]}" disabled>XL</button>
                     </div>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
