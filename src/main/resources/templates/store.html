@@ -84,6 +84,106 @@
                 </div>
             </div>
 
+            <!-- Pre-order divider -->
+            <div style="grid-column: 1 / -1; border-top: 1px solid #333; padding-top: 1.5rem; margin-top: 0.5rem;">
+                <div style="display:inline-flex; align-items:center; gap:0.6rem; background:#1a0f00; border:1px solid #c0392b; border-radius:8px; padding:0.65rem 1.1rem;">
+                    <span style="font-size:1rem;">⏳</span>
+                    <span style="color:#e67e22; font-size:0.9rem; font-weight:600;">Pre-Order — These items ship once available. Order now to secure yours.</span>
+                </div>
+            </div>
+
+            <!-- Blue Tank Top -->
+            <div class="product-card">
+                <img class="product-thumb" src="/Images/Tank%20top%20blue.PNG" alt="Blue Tank Top">
+                <div class="product-info">
+                    <span style="display:inline-block; background:#c0392b; color:white; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; padding:3px 8px; border-radius:4px; text-transform:uppercase; margin-bottom:0.4rem;">Pre-Order</span>
+                    <h3>Blue Tank Top</h3>
+                    <p class="product-desc">Fellas logo tank. Blue.</p>
+                    <div class="size-selector">
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[12]}" onclick="selectSize(this)">S</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[13]}" onclick="selectSize(this)">M</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[14]}" onclick="selectSize(this)">L</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[15]}" onclick="selectSize(this)">XL</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[16]}" onclick="selectSize(this)">XXL</button>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$30</span>
+                        <button class="btn-cart"
+                                data-name="Blue Tank Top"
+                                data-price-display="$30"
+                                onclick="addToCart(this)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seafoam Tank Top -->
+            <div class="product-card">
+                <img class="product-thumb" src="/Images/Tank%20top%20seafoam.PNG" alt="Seafoam Tank Top">
+                <div class="product-info">
+                    <span style="display:inline-block; background:#c0392b; color:white; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; padding:3px 8px; border-radius:4px; text-transform:uppercase; margin-bottom:0.4rem;">Pre-Order</span>
+                    <h3>Seafoam Tank Top</h3>
+                    <p class="product-desc">Fellas logo tank. Seafoam.</p>
+                    <div class="size-selector">
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[17]}" onclick="selectSize(this)">S</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[18]}" onclick="selectSize(this)">M</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[19]}" onclick="selectSize(this)">L</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[20]}" onclick="selectSize(this)">XL</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[21]}" onclick="selectSize(this)">XXL</button>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$30</span>
+                        <button class="btn-cart"
+                                data-name="Seafoam Tank Top"
+                                data-price-display="$30"
+                                onclick="addToCart(this)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tan Tank Top -->
+            <div class="product-card">
+                <img class="product-thumb" src="/Images/Tank%20top%20tan.PNG" alt="Tan Tank Top">
+                <div class="product-info">
+                    <span style="display:inline-block; background:#c0392b; color:white; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; padding:3px 8px; border-radius:4px; text-transform:uppercase; margin-bottom:0.4rem;">Pre-Order</span>
+                    <h3>Tan Tank Top</h3>
+                    <p class="product-desc">Fellas logo tank. Tan.</p>
+                    <div class="size-selector">
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[22]}" onclick="selectSize(this)">S</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[23]}" onclick="selectSize(this)">M</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[24]}" onclick="selectSize(this)">L</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[25]}" onclick="selectSize(this)">XL</button>
+                        <button class="size-btn" th:attr="data-price-id=${priceIds[26]}" onclick="selectSize(this)">XXL</button>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$30</span>
+                        <button class="btn-cart"
+                                data-name="Tan Tank Top"
+                                data-price-display="$30"
+                                onclick="addToCart(this)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hat -->
+            <div class="product-card">
+                <img class="product-thumb" src="/Images/Hat.png" alt="Hat">
+                <div class="product-info">
+                    <span style="display:inline-block; background:#c0392b; color:white; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; padding:3px 8px; border-radius:4px; text-transform:uppercase; margin-bottom:0.4rem;">Pre-Order</span>
+                    <h3>Hat</h3>
+                    <p class="product-desc">Fellas logo hat. One size.</p>
+                    <div class="size-selector">
+                        <button class="size-btn active" th:attr="data-price-id=${priceIds[27]}" onclick="selectSize(this)">One Size</button>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$30</span>
+                        <button class="btn-cart"
+                                data-name="Hat"
+                                data-price-display="$30"
+                                onclick="addToCart(this)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
