@@ -20,13 +20,16 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CustomerRepository customerRepository;
     private final EmailService emailService;
+    private final InventoryService inventoryService;
 
     public OrderService(OrderRepository orderRepository,
                         CustomerRepository customerRepository,
-                        EmailService emailService) {
+                        EmailService emailService,
+                        InventoryService inventoryService) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.emailService = emailService;
+        this.inventoryService = inventoryService;
     }
 
     public void fulfill(String sessionId) {
@@ -75,6 +78,7 @@ public class OrderService {
             log.info("Order saved — session={} customer={} shipping={}",
                 sessionId, order.getCustomerEmail(), order.getShippingLine1());
 
+            inventoryService.decrementForLineItems(lineItemData);
             upsertCustomer(order);
 
             emailService.sendOrderConfirmation(order);

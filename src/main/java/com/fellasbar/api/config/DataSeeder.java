@@ -1,6 +1,8 @@
 package com.fellasbar.api.config;
 
+import com.fellasbar.api.model.Inventory;
 import com.fellasbar.api.model.TargetVenue;
+import com.fellasbar.api.repository.InventoryRepository;
 import com.fellasbar.api.repository.TargetVenueRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -11,9 +13,12 @@ import java.util.List;
 public class DataSeeder implements CommandLineRunner {
 
     private final TargetVenueRepository targetVenueRepository;
+    private final InventoryRepository inventoryRepository;
 
-    public DataSeeder(TargetVenueRepository targetVenueRepository) {
+    public DataSeeder(TargetVenueRepository targetVenueRepository,
+                      InventoryRepository inventoryRepository) {
         this.targetVenueRepository = targetVenueRepository;
+        this.inventoryRepository = inventoryRepository;
     }
 
     @Override
@@ -25,6 +30,39 @@ public class DataSeeder implements CommandLineRunner {
         } else {
             System.out.println("Target venues already exist, skipping seed.");
         }
+
+        if (inventoryRepository.count() == 0) {
+            System.out.println("Seeding preorder inventory...");
+            inventoryRepository.saveAll(getPreorderInventory());
+            System.out.println("Seeded " + inventoryRepository.count() + " inventory records.");
+        } else {
+            System.out.println("Inventory already seeded, skipping.");
+        }
+    }
+
+    private List<Inventory> getPreorderInventory() {
+        // Blue Tank Top — S, M, L, XL, XXL
+        // Seafoam Tank Top — S, M, L, XL, XXL
+        // Tan Tank Top — S, M, L, XL, XXL
+        // Hat — one size
+        return List.of(
+            new Inventory("price_1TudXjC7BRhZ6tCEMyOzqvL4", 6),
+            new Inventory("price_1TudYxC7BRhZ6tCE1h9qLwgc", 6),
+            new Inventory("price_1TudZBC7BRhZ6tCEl9NPuQb2", 6),
+            new Inventory("price_1TudZRC7BRhZ6tCEXvkErZ0Y", 6),
+            new Inventory("price_1TudZiC7BRhZ6tCEu7g0FPyq", 6),
+            new Inventory("price_1TudaKC7BRhZ6tCEMeUY7w4R", 6),
+            new Inventory("price_1TudagC7BRhZ6tCEeEkj3lkN", 6),
+            new Inventory("price_1TudaqC7BRhZ6tCEhteU9ijT", 6),
+            new Inventory("price_1Tudb5C7BRhZ6tCELWFPn6iz", 6),
+            new Inventory("price_1TudbdC7BRhZ6tCEXqshVKmI", 6),
+            new Inventory("price_1Tudc7C7BRhZ6tCElvqLupb8", 6),
+            new Inventory("price_1TudcUC7BRhZ6tCEudEpyFnI", 6),
+            new Inventory("price_1TudcoC7BRhZ6tCEcMOtODvd", 6),
+            new Inventory("price_1Tudd0C7BRhZ6tCEbKDyhbiG", 6),
+            new Inventory("price_1TuddKC7BRhZ6tCEz2h2yuw4", 6),
+            new Inventory("price_1TuddfC7BRhZ6tCEQfLcmm2V", 25)
+        );
     }
 
     private List<TargetVenue> getTargetVenues() {

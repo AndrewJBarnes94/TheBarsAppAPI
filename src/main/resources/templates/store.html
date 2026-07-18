@@ -100,11 +100,11 @@
                     <h3>Blue Tank Top</h3>
                     <p class="product-desc">Fellas logo tank. Blue.</p>
                     <div class="size-selector">
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[12]}" onclick="selectSize(this)">S</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[13]}" onclick="selectSize(this)">M</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[14]}" onclick="selectSize(this)">L</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[15]}" onclick="selectSize(this)">XL</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[16]}" onclick="selectSize(this)">XXL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[12])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[12]}" th:disabled="${soldOutPriceIds.contains(priceIds[12])}" onclick="selectSize(this)">S</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[13])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[13]}" th:disabled="${soldOutPriceIds.contains(priceIds[13])}" onclick="selectSize(this)">M</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[14])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[14]}" th:disabled="${soldOutPriceIds.contains(priceIds[14])}" onclick="selectSize(this)">L</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[15])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[15]}" th:disabled="${soldOutPriceIds.contains(priceIds[15])}" onclick="selectSize(this)">XL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[16])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[16]}" th:disabled="${soldOutPriceIds.contains(priceIds[16])}" onclick="selectSize(this)">XXL</button>
                     </div>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
@@ -124,11 +124,11 @@
                     <h3>Seafoam Tank Top</h3>
                     <p class="product-desc">Fellas logo tank. Seafoam.</p>
                     <div class="size-selector">
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[17]}" onclick="selectSize(this)">S</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[18]}" onclick="selectSize(this)">M</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[19]}" onclick="selectSize(this)">L</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[20]}" onclick="selectSize(this)">XL</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[21]}" onclick="selectSize(this)">XXL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[17])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[17]}" th:disabled="${soldOutPriceIds.contains(priceIds[17])}" onclick="selectSize(this)">S</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[18])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[18]}" th:disabled="${soldOutPriceIds.contains(priceIds[18])}" onclick="selectSize(this)">M</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[19])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[19]}" th:disabled="${soldOutPriceIds.contains(priceIds[19])}" onclick="selectSize(this)">L</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[20])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[20]}" th:disabled="${soldOutPriceIds.contains(priceIds[20])}" onclick="selectSize(this)">XL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[21])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[21]}" th:disabled="${soldOutPriceIds.contains(priceIds[21])}" onclick="selectSize(this)">XXL</button>
                     </div>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
@@ -148,11 +148,11 @@
                     <h3>Tan Tank Top</h3>
                     <p class="product-desc">Fellas logo tank. Tan.</p>
                     <div class="size-selector">
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[22]}" onclick="selectSize(this)">S</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[23]}" onclick="selectSize(this)">M</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[24]}" onclick="selectSize(this)">L</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[25]}" onclick="selectSize(this)">XL</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[26]}" onclick="selectSize(this)">XXL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[22])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[22]}" th:disabled="${soldOutPriceIds.contains(priceIds[22])}" onclick="selectSize(this)">S</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[23])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[23]}" th:disabled="${soldOutPriceIds.contains(priceIds[23])}" onclick="selectSize(this)">M</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[24])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[24]}" th:disabled="${soldOutPriceIds.contains(priceIds[24])}" onclick="selectSize(this)">L</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[25])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[25]}" th:disabled="${soldOutPriceIds.contains(priceIds[25])}" onclick="selectSize(this)">XL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[26])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[26]}" th:disabled="${soldOutPriceIds.contains(priceIds[26])}" onclick="selectSize(this)">XXL</button>
                     </div>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
@@ -172,7 +172,7 @@
                     <h3>Hat</h3>
                     <p class="product-desc">Fellas logo hat. One size.</p>
                     <div class="size-selector">
-                        <button class="size-btn active" th:attr="data-price-id=${priceIds[27]}" onclick="selectSize(this)">One Size</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[27])} ? 'size-btn sold-out' : 'size-btn active'" th:attr="data-price-id=${priceIds[27]}" th:disabled="${soldOutPriceIds.contains(priceIds[27])}" onclick="selectSize(this)">One Size</button>
                     </div>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>

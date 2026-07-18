@@ -2,6 +2,7 @@ package com.fellasbar.api.controller;
 
 import com.fellasbar.api.model.BusinessUser;
 import com.fellasbar.api.repository.BusinessUserRepository;
+import com.fellasbar.api.service.InventoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +26,12 @@ public class PublicController {
     @Value("#{'${stripe.valid-price-ids}'.split(',')}")
     private List<String> priceIds;
 
-    public PublicController(BusinessUserRepository businessUserRepository) {
+    private final InventoryService inventoryService;
+
+    public PublicController(BusinessUserRepository businessUserRepository,
+                             InventoryService inventoryService) {
         this.businessUserRepository = businessUserRepository;
+        this.inventoryService = inventoryService;
     }
 
     @PostMapping("/listing-request")
@@ -69,6 +74,7 @@ public class PublicController {
         log.debug("Store page auth: {} -> isAuthenticated={}", auth, isAuthenticated);
         model.addAttribute("isAuthenticated", isAuthenticated);
         model.addAttribute("priceIds", priceIds);
+        model.addAttribute("soldOutPriceIds", inventoryService.getSoldOutPriceIds());
         return "store";
     }
 }
