@@ -4,9 +4,11 @@ import com.fellasbar.api.model.Inventory;
 import com.fellasbar.api.model.TargetVenue;
 import com.fellasbar.api.repository.InventoryRepository;
 import com.fellasbar.api.repository.TargetVenueRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -14,6 +16,10 @@ public class DataSeeder implements CommandLineRunner {
 
     private final TargetVenueRepository targetVenueRepository;
     private final InventoryRepository inventoryRepository;
+
+    // Injected so t-shirt seeding uses the correct IDs for each profile (test vs. production)
+    @Value("#{'${stripe.valid-price-ids}'.split(',')}")
+    private List<String> allPriceIds;
 
     public DataSeeder(TargetVenueRepository targetVenueRepository,
                       InventoryRepository inventoryRepository) {
@@ -41,28 +47,49 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private List<Inventory> getPreorderInventory() {
-        // Blue Tank Top — S, M, L, XL, XXL
-        // Seafoam Tank Top — S, M, L, XL, XXL
-        // Tan Tank Top — S, M, L, XL, XXL
-        // Hat — one size
-        return List.of(
-            new Inventory("price_1TudXjC7BRhZ6tCEMyOzqvL4", 6),
-            new Inventory("price_1TudYxC7BRhZ6tCE1h9qLwgc", 6),
-            new Inventory("price_1TudZBC7BRhZ6tCEl9NPuQb2", 6),
-            new Inventory("price_1TudZRC7BRhZ6tCEXvkErZ0Y", 6),
-            new Inventory("price_1TudZiC7BRhZ6tCEu7g0FPyq", 6),
-            new Inventory("price_1TudaKC7BRhZ6tCEMeUY7w4R", 6),
-            new Inventory("price_1TudagC7BRhZ6tCEeEkj3lkN", 6),
-            new Inventory("price_1TudaqC7BRhZ6tCEhteU9ijT", 6),
-            new Inventory("price_1Tudb5C7BRhZ6tCELWFPn6iz", 6),
-            new Inventory("price_1TudbdC7BRhZ6tCEXqshVKmI", 6),
-            new Inventory("price_1Tudc7C7BRhZ6tCElvqLupb8", 6),
-            new Inventory("price_1TudcUC7BRhZ6tCEudEpyFnI", 6),
-            new Inventory("price_1TudcoC7BRhZ6tCEcMOtODvd", 6),
-            new Inventory("price_1Tudd0C7BRhZ6tCEbKDyhbiG", 6),
-            new Inventory("price_1TuddKC7BRhZ6tCEz2h2yuw4", 6),
-            new Inventory("price_1TuddfC7BRhZ6tCEQfLcmm2V", 25)
-        );
+        // Quantities by size position: S=6, M=4, L=6, XL=7, XXL=6
+        // T-shirt and tank top IDs come from the active profile's stripe.valid-price-ids list.
+        // Tank top / hat IDs are the same across all profiles (live IDs).
+        List<Inventory> inv = new ArrayList<>();
+
+        // T-shirts (indices 0-11 in valid-price-ids): 3 shirts × 4 sizes (S, M, L, XL)
+        int[] tshirtQtys = {6, 4, 6, 7};
+        for (int shirt = 0; shirt < 3; shirt++) {
+            for (int size = 0; size < 4; size++) {
+                inv.add(new Inventory(allPriceIds.get(shirt * 4 + size), tshirtQtys[size]));
+            }
+        }
+
+        // Blue Tank Top (S, M, L, XL, XXL)
+        inv.add(new Inventory("price_1TudXjC7BRhZ6tCEMyOzqvL4", 6));
+        inv.add(new Inventory("price_1TudYxC7BRhZ6tCE1h9qLwgc", 4));
+        inv.add(new Inventory("price_1TudZBC7BRhZ6tCEl9NPuQb2", 6));
+        inv.add(new Inventory("price_1TudZRC7BRhZ6tCEXvkErZ0Y", 7));
+        inv.add(new Inventory("price_1TudZiC7BRhZ6tCEu7g0FPyq", 6));
+
+        // Seafoam Tank Top (S, M, L, XL, XXL)
+        inv.add(new Inventory("price_1TudaKC7BRhZ6tCEMeUY7w4R", 6));
+        inv.add(new Inventory("price_1TudagC7BRhZ6tCEeEkj3lkN", 4));
+        inv.add(new Inventory("price_1TudaqC7BRhZ6tCEhteU9ijT", 6));
+        inv.add(new Inventory("price_1Tudb5C7BRhZ6tCELWFPn6iz", 7));
+        inv.add(new Inventory("price_1TudbdC7BRhZ6tCEXqshVKmI", 6));
+
+        // Tan Tank Top (S, M, L, XL, XXL)
+        inv.add(new Inventory("price_1Tudc7C7BRhZ6tCElvqLupb8", 6));
+        inv.add(new Inventory("price_1TudcUC7BRhZ6tCEudEpyFnI", 4));
+        inv.add(new Inventory("price_1TudcoC7BRhZ6tCEcMOtODvd", 6));
+        inv.add(new Inventory("price_1Tudd0C7BRhZ6tCEbKDyhbiG", 7));
+        inv.add(new Inventory("price_1TuddKC7BRhZ6tCEz2h2yuw4", 6));
+
+        // Hat (one size)
+        inv.add(new Inventory("price_1TuddfC7BRhZ6tCEQfLcmm2V", 25));
+
+        // T-shirt XXL (appended at indices 28-30 in valid-price-ids)
+        inv.add(new Inventory("price_1TueOqC7BRhZ6tCEY5JWJ8tz", 6)); // Green XXL
+        inv.add(new Inventory("price_1TuePpC7BRhZ6tCE5qlCj5ye", 6)); // Blue XXL
+        inv.add(new Inventory("price_1TueQ6C7BRhZ6tCEb6bOtxn7", 6)); // White XXL
+
+        return inv;
     }
 
     private List<TargetVenue> getTargetVenues() {

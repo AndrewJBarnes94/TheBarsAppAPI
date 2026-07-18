@@ -21,16 +21,26 @@
         </div>
         <div class="product-grid">
 
+            <!-- Pre-order notice -->
+            <div style="grid-column: 1 / -1; margin-bottom: 0.5rem;">
+                <div style="display:inline-flex; align-items:center; gap:0.6rem; background:#1a0f00; border:1px solid #c0392b; border-radius:8px; padding:0.65rem 1.1rem;">
+                    <span style="font-size:1rem;">⏳</span>
+                    <span style="color:#e67e22; font-size:0.9rem; font-weight:600;">Pre-Order — All items ship once available. Order now to secure yours.</span>
+                </div>
+            </div>
+
             <div class="product-card">
                 <img class="product-thumb" src="/Images/T-Shirt Green.jpeg" alt="Green T-Shirt">
                 <div class="product-info">
+                    <span style="display:inline-block; background:#c0392b; color:white; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; padding:3px 8px; border-radius:4px; text-transform:uppercase; margin-bottom:0.4rem;">Pre-Order</span>
                     <h3>Green T-Shirt</h3>
                     <p class="product-desc">Fellas logo tee. Green.</p>
                     <div class="size-selector">
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[0]}" onclick="selectSize(this)">S</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[1]}" onclick="selectSize(this)">M</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[2]}" onclick="selectSize(this)">L</button>
-                        <button class="size-btn sold-out" th:attr="data-price-id=${priceIds[3]}" disabled>XL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[0])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[0]}" th:disabled="${soldOutPriceIds.contains(priceIds[0])}" onclick="selectSize(this)">S</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[1])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[1]}" th:disabled="${soldOutPriceIds.contains(priceIds[1])}" onclick="selectSize(this)">M</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[2])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[2]}" th:disabled="${soldOutPriceIds.contains(priceIds[2])}" onclick="selectSize(this)">L</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[3])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[3]}" th:disabled="${soldOutPriceIds.contains(priceIds[3])}" onclick="selectSize(this)">XL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[28])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[28]}" th:disabled="${soldOutPriceIds.contains(priceIds[28])}" onclick="selectSize(this)">XXL</button>
                     </div>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
@@ -45,13 +55,15 @@
             <div class="product-card">
                 <img class="product-thumb" src="/Images/T-Shirt Blue.jpeg" alt="Blue T-Shirt">
                 <div class="product-info">
+                    <span style="display:inline-block; background:#c0392b; color:white; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; padding:3px 8px; border-radius:4px; text-transform:uppercase; margin-bottom:0.4rem;">Pre-Order</span>
                     <h3>Blue T-Shirt</h3>
                     <p class="product-desc">Fellas logo tee. Blue.</p>
                     <div class="size-selector">
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[4]}" onclick="selectSize(this)">S</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[5]}" onclick="selectSize(this)">M</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[6]}" onclick="selectSize(this)">L</button>
-                        <button class="size-btn sold-out" th:attr="data-price-id=${priceIds[7]}" disabled>XL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[4])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[4]}" th:disabled="${soldOutPriceIds.contains(priceIds[4])}" onclick="selectSize(this)">S</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[5])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[5]}" th:disabled="${soldOutPriceIds.contains(priceIds[5])}" onclick="selectSize(this)">M</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[6])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[6]}" th:disabled="${soldOutPriceIds.contains(priceIds[6])}" onclick="selectSize(this)">L</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[7])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[7]}" th:disabled="${soldOutPriceIds.contains(priceIds[7])}" onclick="selectSize(this)">XL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[29])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[29]}" th:disabled="${soldOutPriceIds.contains(priceIds[29])}" onclick="selectSize(this)">XXL</button>
                     </div>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
@@ -66,13 +78,15 @@
             <div class="product-card">
                 <img class="product-thumb" src="/Images/T-Shirt White.jpeg" alt="White T-Shirt">
                 <div class="product-info">
+                    <span style="display:inline-block; background:#c0392b; color:white; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; padding:3px 8px; border-radius:4px; text-transform:uppercase; margin-bottom:0.4rem;">Pre-Order</span>
                     <h3>White T-Shirt</h3>
                     <p class="product-desc">Fellas logo tee. White.</p>
                     <div class="size-selector">
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[8]}" onclick="selectSize(this)">S</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[9]}" onclick="selectSize(this)">M</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[10]}" onclick="selectSize(this)">L</button>
-                        <button class="size-btn" th:attr="data-price-id=${priceIds[11]}" onclick="selectSize(this)">XL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[8])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[8]}" th:disabled="${soldOutPriceIds.contains(priceIds[8])}" onclick="selectSize(this)">S</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[9])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[9]}" th:disabled="${soldOutPriceIds.contains(priceIds[9])}" onclick="selectSize(this)">M</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[10])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[10]}" th:disabled="${soldOutPriceIds.contains(priceIds[10])}" onclick="selectSize(this)">L</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[11])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[11]}" th:disabled="${soldOutPriceIds.contains(priceIds[11])}" onclick="selectSize(this)">XL</button>
+                        <button th:class="${soldOutPriceIds.contains(priceIds[30])} ? 'size-btn sold-out' : 'size-btn'" th:attr="data-price-id=${priceIds[30]}" th:disabled="${soldOutPriceIds.contains(priceIds[30])}" onclick="selectSize(this)">XXL</button>
                     </div>
                     <div class="product-bottom">
                         <span class="product-price">$30</span>
@@ -81,14 +95,6 @@
                                 data-price-display="$30"
                                 onclick="addToCart(this)">Add to Cart</button>
                     </div>
-                </div>
-            </div>
-
-            <!-- Pre-order divider -->
-            <div style="grid-column: 1 / -1; border-top: 1px solid #333; padding-top: 1.5rem; margin-top: 0.5rem;">
-                <div style="display:inline-flex; align-items:center; gap:0.6rem; background:#1a0f00; border:1px solid #c0392b; border-radius:8px; padding:0.65rem 1.1rem;">
-                    <span style="font-size:1rem;">⏳</span>
-                    <span style="color:#e67e22; font-size:0.9rem; font-weight:600;">Pre-Order — These items ship once available. Order now to secure yours.</span>
                 </div>
             </div>
 
