@@ -2,12 +2,15 @@ package com.fellasbar.api.controller;
 
 import com.fellasbar.api.model.BusinessUser;
 import com.fellasbar.api.model.OperatingHours;
+import com.fellasbar.api.model.Order;
 import com.fellasbar.api.model.Special;
 import com.fellasbar.api.model.TargetVenue;
 import com.fellasbar.api.model.Venue;
 import com.fellasbar.api.repository.BusinessUserRepository;
 import com.fellasbar.api.service.AuditService;
+import com.fellasbar.api.service.EmailService;
 import com.fellasbar.api.service.VenueService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,13 +37,35 @@ public class AdminController {
     private final AuditService auditService;
     private final BusinessUserRepository businessUserRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     public AdminController(VenueService venueService, AuditService auditService,
-                           BusinessUserRepository businessUserRepository, PasswordEncoder passwordEncoder) {
+                           BusinessUserRepository businessUserRepository, PasswordEncoder passwordEncoder,
+                           EmailService emailService) {
         this.venueService = venueService;
         this.auditService = auditService;
         this.businessUserRepository = businessUserRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+    }
+
+    @GetMapping("/test-email")
+    @ResponseBody
+    public ResponseEntity<String> testEmail() {
+        Order dummy = new Order();
+        dummy.setStripeSessionId("test_session_" + System.currentTimeMillis());
+        dummy.setCustomerEmail("test@example.com");
+        dummy.setCustomerPhone("555-000-0000");
+        dummy.setTotalCents(6500);
+        dummy.setLineItems("  - 1x Green T-Shirt (M) — $30.00\n  - 1x Hat — $30.00\n  - Shipping — $5.00");
+        dummy.setShippingName("Test Customer");
+        dummy.setShippingLine1("123 Test St");
+        dummy.setShippingCity("Tampa");
+        dummy.setShippingState("FL");
+        dummy.setShippingPostalCode("33601");
+        dummy.setShippingCountry("US");
+        emailService.sendOrderNotification(dummy);
+        return ResponseEntity.ok("Test notification sent to store notify address — check Railway logs for result.");
     }
 
     // --- Dashboard ---
